@@ -1,0 +1,55 @@
+{
+  "skillCategories": [
+    {
+      "category": "Frontend Engineering",
+      "icon": "code",
+      "description": "Crafting performant, accessible, and reactive interfaces.",
+      "skills": [
+        { "name": "HTML5 / Semantic Web", "level": 98 },
+        { "name": "Modern CSS / Tokens & Grid", "level": 95 },
+        { "name": "JavaScript (ES6+) / TypeScript", "level": 95 },
+        { "name": "React / Next.js", "level": 92 },
+        { "name": "Web Components & Standards", "level": 90 },
+        { "name": "Web Audio / Canvas API", "level": 84 }
+      ]
+    },
+    {
+      "category": "Backend & Distributed Systems",
+      "icon": "server",
+      "description": "Designing resilient APIs, microservices, and databases.",
+      "skills": [
+        { "name": "Node.js / Express / Fastify", "level": 94 },
+        { "name": "Golang & Concurrency", "level": 88 },
+        { "name": "PostgreSQL & Prisma / SQL", "level": 90 },
+        { "name": "Redis / In-Memory Caching", "level": 92 },
+        { "name": "Kafka & Event Streams", "level": 85 },
+        { "name": "GraphQL & RESTful Architectures", "level": 92 }
+      ]
+    },
+    {
+      "category": "Cloud, DevOps & Security",
+      "icon": "cloud",
+      "description": "Automating continuous delivery and zero-trust security.",
+      "skills": [
+        { "name": "Docker & Containerization", "level": 92 },
+        { "name": "Kubernetes & Cloud Orchestration", "level": 82 },
+        { "name": "AWS / GCP Cloud Services", "level": 88 },
+        { "name": "CI/CD (GitHub Actions)", "level": 94 },
+        { "name": "Zero-Trust & OAuth / WebAuthn", "level": 88 },
+        { "name": "Prometheus / Grafana Telemetry", "level": 85 }
+      ]
+    },
+    {
+      "category": "Architecture & Methodology",
+      "icon": "layers",
+      "description": "System modeling, domain-driven design, and mentoring.",
+      "skills": [
+        { "name": "System Architecture (C4 Model)", "level": 92 },
+        { "name": "Clean Code & Design Patterns", "level": 96 },
+        { "name": "Performance Tuning & CWV", "level": 94 },
+        { "name": "Test-Driven Development (TDD)", "level": 90 },
+        { "name": "Agile & Technical Leadership", "level": 90 }
+      ]
+    }
+  ]
+}

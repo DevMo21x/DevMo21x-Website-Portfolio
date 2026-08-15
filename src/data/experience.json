@@ -1,0 +1,65 @@
+{
+  "workExperience": [
+    {
+      "role": "Lead Systems Architect & Senior Engineer",
+      "company": "Nexus Cloud Technologies",
+      "period": "2023 — Present",
+      "location": "Remote",
+      "type": "Full-Time",
+      "summary": "Led architectural decisions across distributed microservices and unified design systems for enterprise clients.",
+      "achievements": [
+        "Architected an event-driven telemetry pipeline processing 50M+ requests daily, improving system fault tolerance by 40%.",
+        "Spearheaded design token migration across 4 product suites, decreasing UI regression bugs by 60%.",
+        "Mentored a team of 12 full-stack engineers and established strict code quality and security review guidelines."
+      ],
+      "technologies": ["TypeScript", "Golang", "Kubernetes", "Redis", "Kafka", "AWS"]
+    },
+    {
+      "role": "Senior Full-Stack Developer",
+      "company": "Apex Interactive Studio",
+      "period": "2021 — 2023",
+      "location": "Toronto, ON",
+      "type": "Full-Time",
+      "summary": "Engineered high-performance web applications and interactive visualization tools for global brands.",
+      "achievements": [
+        "Reduced initial load times by 55% and achieved perfect 100/100 Google Lighthouse Core Web Vitals scores.",
+        "Built responsive client portals with real-time WebSockets synchronization and role-based access controls.",
+        "Integrated automated CI/CD deployment pipelines cutting release cycle turnaround from days to minutes."
+      ],
+      "technologies": ["React", "Node.js", "PostgreSQL", "TailwindCSS", "Docker", "Jest"]
+    },
+    {
+      "role": "Full-Stack Software Engineer",
+      "company": "Vanguard Digital Labs",
+      "period": "2019 — 2021",
+      "location": "Montreal, QC",
+      "type": "Full-Time",
+      "summary": "Developed scalable REST/GraphQL APIs and modern responsive web dashboards.",
+      "achievements": [
+        "Designed and maintained 15+ microservices with 99.9% uptime SLA.",
+        "Collaborated with UX designers to translate wireframes into pixel-perfect, accessible component kits."
+      ],
+      "technologies": ["JavaScript", "Python", "Flask", "GraphQL", "MongoDB", "CSS Grid"]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Computer Science",
+      "institution": "University of Technology",
+      "period": "2015 — 2019",
+      "honors": "Graduated with Distinction • Focus on Distributed Systems & Software Engineering"
+    }
+  ],
+  "certifications": [
+    {
+      "title": "AWS Certified Solutions Architect – Associate",
+      "issuer": "Amazon Web Services",
+      "year": "2024"
+    },
+    {
+      "title": "Certified Kubernetes Administrator (CKA)",
+      "issuer": "Cloud Native Computing Foundation",
+      "year": "2023"
+    }
+  ]
+}

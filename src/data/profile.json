@@ -1,0 +1,29 @@
+{
+  "name": "Mohaimen",
+  "surname": "",
+  "title": "Full-Stack Software Engineer & System Architect",
+  "tagline": "Crafting resilient cloud architectures, elegant developer tools, and high-performance web experiences.",
+  "status": {
+    "available": true,
+    "message": "Open to select engineering roles & architectural consulting"
+  },
+  "location": "Toronto, Canada / Remote",
+  "email": "mohaimen@example.com",
+  "bio": {
+    "short": "Passionate software engineer specialized in building scalable full-stack applications, distributed cloud systems, and modern interactive user interfaces.",
+    "detailed": "With over 6 years of hands-on experience across the entire development lifecycle, I bridge the gap between high-level system design and pixel-perfect frontend engineering. I focus on clean architecture, performance optimization, and delightful developer experiences."
+  },
+  "stats": [
+    { "label": "Years Experience", "value": "6+" },
+    { "label": "Projects Shipped", "value": "30+" },
+    { "label": "GitHub Contributions", "value": "2.4k+" },
+    { "label": "Client Satisfaction", "value": "100%" }
+  ],
+  "socials": {
+    "github": "https://github.com/",
+    "linkedin": "https://linkedin.com/",
+    "twitter": "https://x.com/",
+    "email": "mailto:mohaimen@example.com"
+  },
+  "resumeUrl": "assets/docs/resume.pdf"
+}

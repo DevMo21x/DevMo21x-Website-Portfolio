@@ -1,0 +1,89 @@
+{
+  "categories": [
+    { "id": "all", "label": "All Projects" },
+    { "id": "fullstack", "label": "Full-Stack & Cloud" },
+    { "id": "ai-systems", "label": "AI & Agentic Systems" },
+    { "id": "devtools", "label": "Developer Tools" },
+    { "id": "frontend", "label": "Frontend & Creative" }
+  ],
+  "projects": [
+    {
+      "id": "antigravity-studio",
+      "title": "AntiGravity Agentic Studio",
+      "category": "ai-systems",
+      "featured": true,
+      "summary": "Next-generation collaborative IDE and agentic workspace for autonomous software engineering workflows.",
+      "description": "Engineered a high-performance agent orchestration environment featuring real-time terminal streaming, dynamic tool sandboxing, and context-aware diff generation. Reduced developer debugging cycles by 45%.",
+      "metrics": "12k+ Active Users • 99.98% Uptime",
+      "tags": ["TypeScript", "Node.js", "WebSockets", "Docker", "LLM APIs"],
+      "image": "assets/images/projects/project-1.svg",
+      "demoUrl": "https://example.com/antigravity",
+      "repoUrl": "https://github.com/mohaimen/antigravity-studio"
+    },
+    {
+      "id": "cloud-mesh-observability",
+      "title": "CloudMesh Distributed Telemetry",
+      "category": "fullstack",
+      "featured": true,
+      "summary": "Real-time distributed tracing and observability pipeline for high-throughput microservices.",
+      "description": "Architected an event-driven telemetry ingestion engine processing over 50,000 trace events/sec with sub-millisecond p99 latency using Golang, Kafka, and Redis cluster caching.",
+      "metrics": "50k req/sec • <1ms p99 Latency",
+      "tags": ["Go", "Kafka", "Redis", "Prometheus", "Kubernetes"],
+      "image": "assets/images/projects/project-2.svg",
+      "demoUrl": "https://example.com/cloudmesh",
+      "repoUrl": "https://github.com/mohaimen/cloudmesh-telemetry"
+    },
+    {
+      "id": "nebula-design-system",
+      "title": "Nebula Design System & UI Kit",
+      "category": "frontend",
+      "featured": true,
+      "summary": "Accessible, token-driven component system with glassmorphism micro-interactions and dark-mode defaults.",
+      "description": "Built a comprehensive component library with strict WCAG AAA compliance, zero runtime CSS overhead via modern CSS tokens, and 60fps hardware-accelerated animations.",
+      "metrics": "100% WCAG AAA • 0 CSS Runtime",
+      "tags": ["Vanilla CSS", "Modern Web APIs", "Web Components", "A11y"],
+      "image": "assets/images/projects/project-3.svg",
+      "demoUrl": "https://example.com/nebula-ui",
+      "repoUrl": "https://github.com/mohaimen/nebula-design-system"
+    },
+    {
+      "id": "vector-flow-cli",
+      "title": "VectorFlow CLI & Migrator",
+      "category": "devtools",
+      "featured": false,
+      "summary": "High-speed developer CLI for zero-downtime vector database indexing and migration schemas.",
+      "description": "Developed an open-source command line tool written in Rust that parallelizes embedding chunking and schema migrations across Pinecone, Qdrant, and Milvus.",
+      "metrics": "1.5k GitHub Stars • 8x Faster Sync",
+      "tags": ["Rust", "Vector DBs", "CLI", "Async IO"],
+      "image": "assets/images/projects/project-4.svg",
+      "demoUrl": "https://example.com/vectorflow",
+      "repoUrl": "https://github.com/mohaimen/vectorflow-cli"
+    },
+    {
+      "id": "synthwave-audio-engine",
+      "title": "WebAudio Synthwave Studio",
+      "category": "frontend",
+      "featured": false,
+      "summary": "In-browser modular synthesizer and visualizer using the Web Audio API and Canvas rendering.",
+      "description": "Built an interactive audio workstation in the browser with polyphonic oscillators, custom reverb impulse filters, and 60fps audio-reactive spectral visuals.",
+      "metrics": "60 FPS Canvas • 0 Latency DSP",
+      "tags": ["Web Audio API", "HTML5 Canvas", "JavaScript", "DSP"],
+      "image": "assets/images/projects/project-5.svg",
+      "demoUrl": "https://example.com/synthwave",
+      "repoUrl": "https://github.com/mohaimen/synthwave-audio"
+    },
+    {
+      "id": "secure-vault-auth",
+      "title": "Zero-Trust Identity Vault",
+      "category": "fullstack",
+      "featured": false,
+      "summary": "Decentralized identity verification service with biometric WebAuthn and passkey support.",
+      "description": "Implemented cryptographic passkey registration, JWT rotation with asymmetric key pairs, and role-based access control policies for enterprise SaaS clients.",
+      "metrics": "FIDO2 Certified • 100% Passkey Support",
+      "tags": ["WebAuthn", "Node.js", "PostgreSQL", "Cryptography", "OAuth2"],
+      "image": "assets/images/projects/project-6.svg",
+      "demoUrl": "https://example.com/securevault",
+      "repoUrl": "https://github.com/mohaimen/secure-vault-auth"
+    }
+  ]
+}
