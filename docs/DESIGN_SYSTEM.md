@@ -4,7 +4,7 @@ This document specifies the visual language, design tokens, color harmonies, typ
 
 ---
 
-## 🎨 Color Palette & Themes
+## Color Palette & Themes
 
 The portfolio employs an intentional, dark-mode-first aesthetic with rich slate depths, luminous cyan/indigo accents, and frosted glass overlays.
 
@@ -34,7 +34,7 @@ The portfolio employs an intentional, dark-mode-first aesthetic with rich slate 
 
 ---
 
-## 🪟 Glassmorphism & Surface Tokens
+## Glassmorphism & Surface Tokens
 
 - **Glass Surface**: `background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(16px);`
 - **Glass Border**: `border: 1px solid rgba(255, 255, 255, 0.08);`
@@ -43,7 +43,7 @@ The portfolio employs an intentional, dark-mode-first aesthetic with rich slate 
 
 ---
 
-## ✍️ Typography Scale
+## Typography Scale
 
 - **Display & Headings**: `font-family: 'Outfit', sans-serif;`
 - **Body & Controls**: `font-family: 'Inter', -apple-system, sans-serif;`
@@ -59,7 +59,7 @@ The portfolio employs an intentional, dark-mode-first aesthetic with rich slate 
 
 ---
 
-## ⚡ Motion & Interaction Principles
+## Motion & Interaction Principles
 
 1. **Restraint Over Noise**: Subtle 200–300ms cubic-bezier transitions on hover states.
 2. **Scroll Reveals**: Gentle fade-up transitions triggered when elements enter viewport via `IntersectionObserver`.
