@@ -65,7 +65,7 @@ DevMo21x-Website-Portfolio/
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18+ or v20+ recommended)
+- [Node.js](https://nodejs.org/) (v22+)
 - [npm](https://www.npmjs.com/)
 
 ### 1. Install Dependencies
