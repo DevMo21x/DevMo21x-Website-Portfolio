@@ -2,8 +2,6 @@
 
 A high-performance, modern developer portfolio built with **Astro**, **Tailwind CSS**, and **TypeScript**. Designed with an editorial literary-tech aesthetic, subtle micro-interactions, responsive layouts, and accessibility best practices.
 
-![Portfolio Preview Banner](assets/images/og/preview.png)
-
 ---
 
 ## Highlights
