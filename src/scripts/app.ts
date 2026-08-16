@@ -4,25 +4,27 @@
 
 import { initTheme } from './modules/theme';
 import { initNavigation } from './modules/navigation';
-import { initProjects } from './modules/projects';
 import { initAnimations } from './modules/animations';
 import { initContactForm } from './modules/contact';
 
-document.addEventListener('DOMContentLoaded', async () => {
+const init = () => {
   // 1. Initialize Theme (dark/light)
   initTheme();
 
-  // 2. Initialize Navigation & Scroll-spy
+  // 2. Initialize Navigation & Mobile Menu
   initNavigation();
 
-  // 3. Initialize Dynamic Projects Showcase
-  await initProjects();
-
-  // 4. Initialize Form Handling
+  // 3. Initialize Form Handling
   initContactForm();
 
-  // 5. Initialize IntersectionObserver Animations
+  // 4. Initialize IntersectionObserver Animations
   initAnimations();
 
   console.log('✨ DevMo21x-Website-Portfolio initialized successfully.');
-});
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

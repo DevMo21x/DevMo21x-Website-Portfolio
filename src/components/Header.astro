@@ -49,11 +49,24 @@ import profileData from '../data/profile.json';
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       </button>
       <button
+        id="mobile-menu-btn"
         class="btn-luxury-icon !w-9 !h-9 text-primary"
         aria-label="Toggle Menu"
+        aria-expanded="false"
       >
         <span class="material-symbols-outlined text-xl" aria-hidden="true">menu</span>
       </button>
     </div>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-outline-variant/30 bg-surface/95 backdrop-blur-2xl px-margin-mobile py-6 space-y-4">
+    <a class="mobile-link block font-label-sm text-sm uppercase tracking-widest text-secondary hover:text-primary py-2 transition-colors" href="#experience">Experience</a>
+    <a class="mobile-link block font-label-sm text-sm uppercase tracking-widest text-secondary hover:text-primary py-2 transition-colors" href="#projects">Projects</a>
+    <a class="mobile-link block font-label-sm text-sm uppercase tracking-widest text-secondary hover:text-primary py-2 transition-colors" href="#certificates">Certificates</a>
+    <a class="mobile-link inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black font-label-sm text-xs font-medium uppercase tracking-[0.15em] mt-2" href="#contact">
+      <span>Connect</span>
+      <span class="material-symbols-outlined text-sm" aria-hidden="true">arrow_outward</span>
+    </a>
   </div>
 </header>
