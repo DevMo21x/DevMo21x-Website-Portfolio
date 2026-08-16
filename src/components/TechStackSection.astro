@@ -1,0 +1,84 @@
+---
+import skillsData from '../data/skills.json';
+
+// Helper to map tech stack names to devicon classes
+const getIconForSkill = (skill: string) => {
+  const t = skill.toLowerCase();
+  if (t.includes('kubernetes')) return 'devicon-kubernetes-plain';
+  if (t.includes('aws') || t.includes('amazon')) return 'devicon-amazonwebservices-plain-wordmark';
+  if (t.includes('gcp')) return 'devicon-googlecloud-plain';
+  if (t.includes('terraform')) return 'devicon-terraform-plain';
+  if (t.includes('go')) return 'devicon-go-plain';
+  if (t.includes('docker')) return 'devicon-docker-plain';
+  if (t.includes('rust')) return 'devicon-rust-plain';
+  if (t.includes('node')) return 'devicon-nodejs-plain';
+  if (t.includes('react')) return 'devicon-react-original';
+  if (t.includes('css')) return 'devicon-css3-plain';
+  if (t.includes('html')) return 'devicon-html5-plain';
+  if (t.includes('typescript') || t.includes('ts')) return 'devicon-typescript-plain';
+  if (t.includes('javascript') || t.includes('js')) return 'devicon-javascript-plain';
+  if (t.includes('python')) return 'devicon-python-plain';
+  if (t.includes('postgresql') || t.includes('sql')) return 'devicon-postgresql-plain';
+  if (t.includes('redis')) return 'devicon-redis-plain';
+  if (t.includes('kafka')) return 'devicon-apachekafka-original';
+  if (t.includes('graphql')) return 'devicon-graphql-plain';
+  return 'material-symbols-outlined'; // fallback
+};
+
+// Flatten skills from all categories for the marquee
+const allSkills = skillsData.skillCategories.flatMap(c => c.skills);
+// Filter out duplicates if any, or just pick top N
+const displaySkills = allSkills.slice(0, 15);
+---
+
+<section class="animate-on-scroll w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-t border-outline-variant scroll-mt-32">
+  <div class="mb-12">
+    <h2 class="font-body-lg text-3xl font-light tracking-tight text-primary">
+      Technical Stack
+    </h2>
+  </div>
+  <div class="overflow-hidden relative w-full flex items-center py-8">
+    <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-surface-container-low to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-surface-container-low to-transparent z-10 pointer-events-none"></div>
+    <div class="flex w-max animate-infinite-scroll">
+      <!-- First Set -->
+      <div class="flex items-center gap-16 pr-16">
+        {displaySkills.map((skill) => {
+          const iconClass = getIconForSkill(skill.name);
+          const isMaterial = iconClass === 'material-symbols-outlined';
+          return (
+            <div class="flex flex-col items-center gap-5 w-32 group text-center">
+              {isMaterial ? (
+                <span class={`${iconClass} text-5xl text-secondary group-hover:text-primary transition-colors group-hover:scale-110 transform duration-300`} aria-hidden="true">code</span>
+              ) : (
+                <i class={`${iconClass} text-5xl text-secondary group-hover:text-primary transition-colors group-hover:scale-110 transform duration-300`} aria-hidden="true"></i>
+              )}
+              <span class="font-label-sm text-secondary uppercase tracking-widest group-hover:text-primary transition-colors text-xs whitespace-normal line-clamp-2">
+                {skill.name.split(' / ')[0]}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+      <!-- Duplicated Set for Infinite Scroll -->
+      <div class="flex items-center gap-16 pr-16">
+        {displaySkills.map((skill) => {
+          const iconClass = getIconForSkill(skill.name);
+          const isMaterial = iconClass === 'material-symbols-outlined';
+          return (
+            <div class="flex flex-col items-center gap-5 w-32 group text-center">
+              {isMaterial ? (
+                <span class={`${iconClass} text-5xl text-secondary group-hover:text-primary transition-colors group-hover:scale-110 transform duration-300`} aria-hidden="true">code</span>
+              ) : (
+                <i class={`${iconClass} text-5xl text-secondary group-hover:text-primary transition-colors group-hover:scale-110 transform duration-300`} aria-hidden="true"></i>
+              )}
+              <span class="font-label-sm text-secondary uppercase tracking-widest group-hover:text-primary transition-colors text-xs whitespace-normal line-clamp-2">
+                {skill.name.split(' / ')[0]}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  </div>
+</section>
