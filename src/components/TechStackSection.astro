@@ -33,7 +33,7 @@ const displaySkills = allSkills.slice(0, 15);
 
 <section class="animate-on-scroll w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-t border-outline-variant scroll-mt-32">
   <div class="mb-12">
-    <h2 class="font-body-lg text-3xl font-light tracking-tight text-primary">
+    <h2 class="font-headline-md text-primary">
       Technical Stack
     </h2>
   </div>
@@ -49,11 +49,11 @@ const displaySkills = allSkills.slice(0, 15);
           return (
             <div class="flex flex-col items-center gap-5 w-32 group text-center">
               {isMaterial ? (
-                <span class={`${iconClass} text-5xl text-secondary group-hover:text-primary transition-colors group-hover:scale-110 transform duration-300`} aria-hidden="true">code</span>
+                <span class={`${iconClass} text-5xl text-on-background grayscale opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all duration-500 group-hover:scale-110 transform`} aria-hidden="true">code</span>
               ) : (
-                <i class={`${iconClass} text-5xl text-secondary group-hover:text-primary transition-colors group-hover:scale-110 transform duration-300`} aria-hidden="true"></i>
+                <i class={`${iconClass} text-5xl text-on-background grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:text-primary transition-all duration-500 group-hover:scale-110 transform`} aria-hidden="true"></i>
               )}
-              <span class="font-label-sm text-secondary uppercase tracking-widest group-hover:text-primary transition-colors text-xs whitespace-normal line-clamp-2">
+              <span class="font-label-sm text-secondary uppercase tracking-widest group-hover:text-primary transition-colors duration-500 text-xs whitespace-normal line-clamp-2">
                 {skill.name.split(' / ')[0]}
               </span>
             </div>
@@ -68,11 +68,11 @@ const displaySkills = allSkills.slice(0, 15);
           return (
             <div class="flex flex-col items-center gap-5 w-32 group text-center">
               {isMaterial ? (
-                <span class={`${iconClass} text-5xl text-secondary group-hover:text-primary transition-colors group-hover:scale-110 transform duration-300`} aria-hidden="true">code</span>
+                <span class={`${iconClass} text-5xl text-on-background grayscale opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all duration-500 group-hover:scale-110 transform`} aria-hidden="true">code</span>
               ) : (
-                <i class={`${iconClass} text-5xl text-secondary group-hover:text-primary transition-colors group-hover:scale-110 transform duration-300`} aria-hidden="true"></i>
+                <i class={`${iconClass} text-5xl text-on-background grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:text-primary transition-all duration-500 group-hover:scale-110 transform`} aria-hidden="true"></i>
               )}
-              <span class="font-label-sm text-secondary uppercase tracking-widest group-hover:text-primary transition-colors text-xs whitespace-normal line-clamp-2">
+              <span class="font-label-sm text-secondary uppercase tracking-widest group-hover:text-primary transition-colors duration-500 text-xs whitespace-normal line-clamp-2">
                 {skill.name.split(' / ')[0]}
               </span>
             </div>

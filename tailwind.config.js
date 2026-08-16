@@ -5,53 +5,25 @@ export default {
 	theme: {
 		extend: {
 			"colors": {
-				"surface-container-low": "#f3f3f3",
-				"on-error-container": "#93000a",
-				"surface-bright": "#f9f9f9",
-				"tertiary-fixed": "#e5e2dd",
-				"on-secondary-fixed": "#1d1b17",
-				"inverse-on-surface": "#f1f1f1",
-				"secondary": "#615e58",
-				"on-primary-container": "#858383",
-				"primary-fixed-dim": "#c8c6c5",
-				"primary-container": "#1c1b1b",
-				"on-secondary-container": "#65625c",
-				"on-surface": "#1b1b1b",
-				"surface": "#f9f9f9",
-				"outline": "#747878",
-				"surface-variant": "#e2e2e2",
-				"primary-fixed": "#e5e2e1",
-				"on-tertiary-fixed": "#1c1c19",
-				"on-primary": "#ffffff",
-				"on-tertiary-fixed-variant": "#474743",
-				"surface-dim": "#dadada",
+				// Premium Dark Theme Palette
+				"surface-container-low": "#050505", // Deepest background
+				"surface": "#111111", // Card background
+				"surface-container-highest": "#1a1a1a", // Elevated surfaces
+				"on-background": "#a1a1aa", // Muted text for general reading
+				"primary": "#ffffff", // Bright text / Highlights
+				"on-primary": "#000000", // Text on primary background (like buttons)
+				"secondary": "#888888", // Secondary text / Labels
+				"outline": "#333333", // Strong borders
+				"outline-variant": "#222222", // Subtle borders
+				"surface-tint": "#ffffff", // Tint for hover states
+				
+				// Optional: keep some of the others for compatibility but mapped to dark shades
+				"on-surface": "#ffffff",
+				"surface-variant": "#171717",
+				"error": "#ef4444",
 				"on-error": "#ffffff",
-				"surface-container-lowest": "#ffffff",
-				"on-primary-fixed": "#1c1b1b",
-				"surface-container-highest": "#e2e2e2",
-				"outline-variant": "#c4c7c7",
-				"on-tertiary-container": "#858480",
-				"inverse-surface": "#303030",
-				"secondary-fixed-dim": "#cbc6be",
-				"on-primary-fixed-variant": "#474746",
-				"tertiary": "#000000",
-				"secondary-fixed": "#e7e2da",
-				"secondary-container": "#e4dfd7",
-				"error-container": "#ffdad6",
-				"on-surface-variant": "#444748",
-				"primary": "#000000",
-				"surface-container-high": "#e8e8e8",
-				"surface-container": "#eeeeee",
-				"inverse-primary": "#c8c6c5",
-				"tertiary-fixed-dim": "#c9c6c2",
-				"tertiary-container": "#1c1c19",
-				"on-secondary": "#ffffff",
-				"on-background": "#1b1b1b",
-				"on-tertiary": "#ffffff",
-				"on-secondary-fixed-variant": "#494741",
-				"background": "#f9f9f9",
-				"surface-tint": "#5f5e5e",
-				"error": "#ba1a1a"
+				"inverse-surface": "#ffffff",
+				"inverse-primary": "#000000",
 			},
 			"borderRadius": {
 				"DEFAULT": "0.125rem",
@@ -68,25 +40,28 @@ export default {
 				"section-gap": "120px"
 			},
 			"fontFamily": {
-				"body-md": ["Inter"],
-				"label-sm": ["Inter"],
-				"headline-md": ["\"Source Serif 4\""],
-				"body-lg": ["Inter"],
-				"display-lg": ["\"Source Serif 4\""],
-				"label-lg": ["Inter"],
-				"display-lg-mobile": ["\"Source Serif 4\""],
-				"headline-lg": ["\"Source Serif 4\""],
-				"logo": ["\"Space Grotesk\"", "sans-serif"]
+				// Premium Typography Stack
+				"body-md": ["Outfit", "sans-serif"],
+				"label-sm": ["Outfit", "sans-serif"],
+				"body-lg": ["Outfit", "sans-serif"],
+				"label-lg": ["Outfit", "sans-serif"],
+				
+				// Striking Display Stack
+				"headline-md": ["Syne", "sans-serif"],
+				"display-lg": ["Syne", "sans-serif"],
+				"display-lg-mobile": ["Syne", "sans-serif"],
+				"headline-lg": ["Syne", "sans-serif"],
+				"logo": ["Syne", "sans-serif"]
 			},
 			"fontSize": {
-				"body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-				"label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
-				"headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
-				"body-lg": ["20px", { "lineHeight": "32px", "fontWeight": "400" }],
-				"display-lg": ["72px", { "lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+				"body-md": ["16px", { "lineHeight": "26px", "fontWeight": "300" }],
+				"label-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400", "letterSpacing": "0.05em" }],
+				"headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "600", "letterSpacing": "-0.01em" }],
+				"body-lg": ["20px", { "lineHeight": "32px", "fontWeight": "300" }],
+				"display-lg": ["88px", { "lineHeight": "1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
 				"label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
-				"display-lg-mobile": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
-				"headline-lg": ["48px", { "lineHeight": "56px", "fontWeight": "400" }]
+				"display-lg-mobile": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+				"headline-lg": ["48px", { "lineHeight": "56px", "fontWeight": "600", "letterSpacing": "-0.02em" }]
 			}
 		},
 	},
