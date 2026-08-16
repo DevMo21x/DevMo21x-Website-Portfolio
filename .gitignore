@@ -25,6 +25,7 @@ yarn-error.log*
 dist/
 build/
 .cache/
+.astro/
 out/
 
 # Environment variables & secrets
