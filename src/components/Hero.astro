@@ -1,5 +1,6 @@
 ---
 import profileData from '../data/profile.json';
+import StarBorder from './StarBorder.jsx';
 ---
 
 <section
@@ -29,18 +30,21 @@ import profileData from '../data/profile.json';
             aria-hidden="true">arrow_forward</span
           >
         </a>
-        <a
-          class="btn-luxury-secondary group"
+        <StarBorder
+          as="a"
           href={profileData.resumeUrl || '#contact'}
           target={profileData.resumeUrl ? '_blank' : '_self'}
           rel="noopener noreferrer"
+          color="magenta"
+          speed="2s"
+          client:load
         >
           <span
             class="material-symbols-outlined text-base text-secondary group-hover:text-primary transition-colors"
             aria-hidden="true">description</span
           >
           <span>View Resume</span>
-        </a>
+        </StarBorder>
       </div>
     </div>
   </div>
