@@ -37,7 +37,7 @@ export default {
 				"margin-desktop": "64px",
 				"container-max": "1280px",
 				"margin-mobile": "20px",
-				"section-gap": "120px"
+				"section-gap": "180px"
 			},
 			"fontFamily": {
 				// Premium Typography Stack

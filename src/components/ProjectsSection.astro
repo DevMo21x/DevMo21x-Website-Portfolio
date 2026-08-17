@@ -1,8 +1,6 @@
 ---
 import projectsData from '../data/projects.json';
-
-const featuredProject = projectsData.projects.find(p => p.featured) || projectsData.projects[0];
-const otherProjects = projectsData.projects.filter(p => p.id !== featuredProject.id).slice(0, 4);
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card.tsx';
 
 // Helper to map tags to devicon classes
 const getIconForTag = (tag: string) => {
@@ -18,94 +16,186 @@ const getIconForTag = (tag: string) => {
   if (t.includes('css')) return 'devicon-css3-plain';
   if (t.includes('typescript') || t.includes('ts')) return 'devicon-typescript-plain';
   if (t.includes('python')) return 'devicon-python-plain';
-  return ''; // Default or empty if no icon
+  return '';
 };
 ---
 
-<section
-  class="animate-on-scroll w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-t border-outline-variant scroll-mt-32"
-  id="projects"
->
-  <div class="mb-16 flex items-center justify-between">
-    <h2 class="font-headline-md text-primary">
-      Selected Projects
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-t border-outline-variant/50 scroll-mt-32" id="projects">
+  
+  <div class="mb-24 md:w-2/3 project-header">
+    <h2 class="font-headline-md text-[6vw] md:text-7xl text-primary font-bold tracking-tight mb-6">
+      Selected Work
     </h2>
+    <p class="font-body-lg text-secondary text-xl font-light">
+      A collection of recent projects spanning cloud infrastructure, backend systems, and frontend experiences.
+    </p>
   </div>
 
-  <!-- Featured Project -->
-  <div class="mb-gutter bg-surface/50 backdrop-blur-md p-8 md:p-16 rounded-3xl flex flex-col lg:flex-row gap-12 items-center border border-outline-variant/30 shadow-sm hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] hover:-translate-y-2 hover:bg-surface/80 hover:border-outline transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group cursor-pointer">
-    <div class="flex-1 w-full">
-      <span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-6 block flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Featured
-      </span>
-      <h3 class="font-headline-md md:text-5xl text-primary mb-6 group-hover:text-surface-tint transition-colors">
-        {featuredProject.title}
-      </h3>
-      <p class="font-body-md text-on-background/80 mb-10 max-w-xl font-light leading-relaxed">
-        {featuredProject.description}
-      </p>
-      <div class="flex flex-wrap gap-3 mb-10">
-        {featuredProject.tags.map((tag) => {
-          const icon = getIconForTag(tag);
-          return (
-            <span class="px-4 py-1.5 border border-outline-variant/50 text-secondary font-label-sm rounded-full flex items-center gap-2 hover:bg-surface-container-high transition-colors">
-              {icon && <i class={`${icon} text-lg`} aria-hidden="true"></i>}
-              {tag}
-            </span>
-          );
-        })}
-      </div>
-      <a href={featuredProject.demoUrl || featuredProject.repoUrl} target="_blank" rel="noopener noreferrer" class="btn-luxury-primary !px-6 !py-2.5 text-xs group/btn inline-flex">
-        <span>View Project</span>
-        <span class="material-symbols-outlined text-sm transform group-hover/btn:translate-x-1 transition-transform duration-300" aria-hidden="true">arrow_forward</span>
-      </a>
-    </div>
-    <div class="flex-1 w-full aspect-video bg-surface-container-highest rounded-2xl flex items-center justify-center border border-outline-variant/20 overflow-hidden relative">
-      <!-- You could use an actual image tag here if featuredProject.image is a valid path -->
-      <span class="material-symbols-outlined text-6xl text-outline-variant opacity-50 group-hover:scale-110 transition-transform duration-700" aria-hidden="true">cloud_queue</span>
-    </div>
-  </div>
+  <div class="flex flex-col gap-32">
+    {projectsData.projects.map((project, index) => {
+      // Alternate layout: even items image left, odd items image right
+      const isEven = index % 2 === 0;
 
-  <!-- Grid of other projects -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
-    {otherProjects.map(project => (
-      <a href={project.demoUrl || project.repoUrl} target="_blank" rel="noopener noreferrer" class="bg-surface/30 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-outline-variant/30 shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] hover:-translate-y-2 hover:bg-surface/60 hover:border-outline transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group cursor-pointer block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-        <div class="flex justify-between items-start mb-12">
-          <h4 class="font-headline-md text-headline-md text-primary group-hover:text-surface-tint transition-colors">
-            {project.title}
-          </h4>
-          <div class="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/60 group-hover:text-white group-hover:bg-white/[0.1] group-hover:border-white/30 group-hover:scale-110 transition-all duration-300">
-            <span class="material-symbols-outlined text-lg transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" aria-hidden="true">arrow_outward</span>
-          </div>
-        </div>
-        <p class="font-body-md text-on-background/80 mb-8 font-light leading-relaxed">
-          {project.summary}
-        </p>
-        <div class="flex flex-wrap gap-2">
-          {project.tags.slice(0, 3).map((tag) => {
-            const icon = getIconForTag(tag);
-            return (
-              <span class="px-3 py-1 bg-surface-container-low text-secondary font-label-sm rounded-md flex items-center gap-2">
-                {icon && <i class={`${icon} text-base`} aria-hidden="true"></i>}
-                {tag}
-              </span>
-            );
-          })}
-        </div>
-      </a>
-    ))}
-  </div>
+      return (
+        <a 
+          href={project.demoUrl || project.repoUrl} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="project-card block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-3xl"
+        >
+          <Card className={`relative overflow-hidden bg-transparent border-0 shadow-none flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} gap-12 lg:gap-24 items-center group`}>
+            
+            {/* Visual Side */}
+            <div class="w-full md:w-3/5 aspect-[4/3] rounded-3xl overflow-hidden relative border border-outline-variant/30 bg-surface-container-highest z-10 project-visual-container">
+              <div class="absolute inset-0 bg-surface-tint opacity-0 group-hover:opacity-5 transition-opacity duration-700 z-20"></div>
+              
+              {/* GSAP Target for Image/Pattern Scale */}
+              <div class="project-visual w-full h-full flex items-center justify-center bg-gradient-to-br from-surface-container-highest to-surface-container-low relative">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent opacity-50"></div>
+                
+                {project.featured && (
+                  <span class="absolute top-6 left-6 font-label-sm text-xs text-primary uppercase tracking-[0.2em] px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-md">
+                    Featured
+                  </span>
+                )}
 
-  <div class="mt-20 flex justify-center animate-on-scroll">
-    <a
-      class="btn-luxury-secondary !px-8 !py-4 group text-sm"
-      href="https://github.com/DevMo21x"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <svg class="lucide lucide-github opacity-80 group-hover:opacity-100 transition-opacity" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.5-1.4 6.5-7a4.6 4.6 0 0 0-1.3-3.2 4.1 4.1 0 0 0-.1-3.2s-1.1-.3-3.5 1.6a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.1 4.1 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 12.08c0 5.6 3.36 6.65 6.5 7a4.8 4.8 0 0 0-1 3.02v4"></path><path d="M9 18c-4.5 1.5-5-2.5-7-3"></path></svg>
-      <span>Explore All Repositories</span>
-      <span class="material-symbols-outlined text-sm transform group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true">arrow_forward</span>
-    </a>
+                <span class="material-symbols-outlined text-8xl text-outline-variant opacity-30 drop-shadow-2xl" aria-hidden="true">
+                  {index % 2 === 0 ? 'terminal' : 'dns'}
+                </span>
+              </div>
+            </div>
+
+            {/* Content Side */}
+            <div class="w-full md:w-2/5 flex flex-col justify-center">
+              <div class="flex items-center justify-between mb-8">
+                <span class="font-label-sm text-secondary uppercase tracking-[0.2em]">0{index + 1}</span>
+                <div class="project-arrow w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center text-secondary">
+                  <span class="material-symbols-outlined transform -rotate-45 text-xl" aria-hidden="true">arrow_forward</span>
+                </div>
+              </div>
+              
+              <CardTitle className="text-4xl md:text-5xl font-bold mb-6 text-primary group-hover:text-surface-tint transition-colors duration-500">
+                {project.title}
+              </CardTitle>
+              
+              <CardDescription className="text-lg font-light text-on-background/80 mb-10 leading-relaxed">
+                {project.description || project.summary}
+              </CardDescription>
+
+              <CardFooter className="p-0 flex flex-wrap gap-3">
+                {project.tags.map((tag) => {
+                  const icon = getIconForTag(tag);
+                  return (
+                    <span class="px-4 py-2 bg-surface-container-highest border border-outline-variant/30 text-secondary font-label-sm rounded-full flex items-center gap-2">
+                      {icon && <i class={`${icon} text-lg opacity-70`} aria-hidden="true"></i>}
+                      {tag}
+                    </span>
+                  );
+                })}
+              </CardFooter>
+            </div>
+            
+          </Card>
+        </a>
+      );
+    })}
   </div>
 </section>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Section Header Reveal
+  gsap.fromTo('.project-header', 
+    { y: 50, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.project-header',
+        start: 'top 80%',
+      }
+    }
+  );
+
+  // Project Cards Reveal & Hover setup
+  const projectCards = document.querySelectorAll('.project-card');
+
+  projectCards.forEach((card, index) => {
+    const visualContainer = card.querySelector('.project-visual-container');
+    const visual = card.querySelector('.project-visual');
+    const arrow = card.querySelector('.project-arrow');
+    const contentSide = card.querySelector('.CardTitle')?.parentElement;
+
+    // Scroll Reveal Timeline
+    gsap.fromTo(visualContainer,
+      { y: 100, opacity: 0, scale: 0.95 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+        }
+      }
+    );
+
+    gsap.fromTo(contentSide,
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        delay: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+        }
+      }
+    );
+
+    // Hover interactions
+    if (visual && arrow) {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(visual, {
+          scale: 1.05,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+        gsap.to(arrow, {
+          backgroundColor: '#ffffff',
+          color: '#000000',
+          borderColor: '#ffffff',
+          rotate: 45,
+          duration: 0.4,
+          ease: 'back.out(2)'
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(visual, {
+          scale: 1,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+        gsap.to(arrow, {
+          backgroundColor: 'transparent',
+          color: '#888888',
+          borderColor: '#222222',
+          rotate: 0,
+          duration: 0.4,
+          ease: 'power3.out'
+        });
+      });
+    }
+  });
+</script>

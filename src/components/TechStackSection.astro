@@ -1,7 +1,6 @@
 ---
 import skillsData from '../data/skills.json';
 
-// Helper to map tech stack names to devicon classes
 const getIconForSkill = (skill: string) => {
   const t = skill.toLowerCase();
   if (t.includes('kubernetes')) return 'devicon-kubernetes-plain';
@@ -22,57 +21,40 @@ const getIconForSkill = (skill: string) => {
   if (t.includes('redis')) return 'devicon-redis-plain';
   if (t.includes('kafka')) return 'devicon-apachekafka-original';
   if (t.includes('graphql')) return 'devicon-graphql-plain';
-  return 'material-symbols-outlined'; // fallback
+  return 'material-symbols-outlined';
 };
 
-// Flatten skills from all categories for the marquee
 const allSkills = skillsData.skillCategories.flatMap(c => c.skills);
-// Filter out duplicates if any, or just pick top N
-const displaySkills = allSkills.slice(0, 15);
+// Duplicate the array a few times to ensure enough content for smooth scrolling
+const displaySkills = [...allSkills, ...allSkills, ...allSkills];
 ---
 
-<section class="animate-on-scroll w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-t border-outline-variant scroll-mt-32">
-  <div class="mb-12">
-    <h2 class="font-headline-md text-primary">
-      Technical Stack
+<section class="w-full py-section-gap overflow-hidden bg-surface text-on-background border-y border-outline-variant/30 scroll-mt-32 relative" id="tech-stack">
+  
+  <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-16 tech-header relative z-10">
+    <h2 class="font-headline-md text-3xl md:text-5xl text-primary font-bold">
+      Technical Arsenal
     </h2>
   </div>
-  <div class="overflow-hidden relative w-full flex items-center py-8">
-    <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-surface-container-low to-transparent z-10 pointer-events-none"></div>
-    <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-surface-container-low to-transparent z-10 pointer-events-none"></div>
-    <div class="flex w-max animate-infinite-scroll">
-      <!-- First Set -->
-      <div class="flex items-center gap-16 pr-16">
+
+  {/* GSAP Marquee Container */}
+  <div class="relative w-full flex flex-col gap-8 py-10 md:py-16 transform -rotate-2 scale-105 bg-[#0a0a0a] border-y border-outline-variant/20 shadow-2xl">
+    
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-transparent to-[#0a0a0a] z-10 pointer-events-none w-full"></div>
+
+    <div class="tech-marquee-wrapper overflow-hidden flex w-[200%]">
+      <div class="tech-marquee-content flex gap-12 md:gap-24 items-center whitespace-nowrap px-6">
         {displaySkills.map((skill) => {
           const iconClass = getIconForSkill(skill.name);
           const isMaterial = iconClass === 'material-symbols-outlined';
           return (
-            <div class="flex flex-col items-center gap-5 w-32 group text-center">
+            <div class="flex items-center gap-6 group cursor-default opacity-60 hover:opacity-100 transition-opacity duration-300">
               {isMaterial ? (
-                <span class={`${iconClass} text-5xl text-on-background grayscale opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all duration-500 group-hover:scale-110 transform`} aria-hidden="true">code</span>
+                <span class={`${iconClass} text-5xl md:text-7xl text-primary`} aria-hidden="true">code</span>
               ) : (
-                <i class={`${iconClass} text-5xl text-on-background grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:text-primary transition-all duration-500 group-hover:scale-110 transform`} aria-hidden="true"></i>
+                <i class={`${iconClass} text-5xl md:text-7xl text-primary`} aria-hidden="true"></i>
               )}
-              <span class="font-label-sm text-secondary uppercase tracking-widest group-hover:text-primary transition-colors duration-500 text-xs whitespace-normal line-clamp-2">
-                {skill.name.split(' / ')[0]}
-              </span>
-            </div>
-          )
-        })}
-      </div>
-      <!-- Duplicated Set for Infinite Scroll -->
-      <div class="flex items-center gap-16 pr-16">
-        {displaySkills.map((skill) => {
-          const iconClass = getIconForSkill(skill.name);
-          const isMaterial = iconClass === 'material-symbols-outlined';
-          return (
-            <div class="flex flex-col items-center gap-5 w-32 group text-center">
-              {isMaterial ? (
-                <span class={`${iconClass} text-5xl text-on-background grayscale opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all duration-500 group-hover:scale-110 transform`} aria-hidden="true">code</span>
-              ) : (
-                <i class={`${iconClass} text-5xl text-on-background grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:text-primary transition-all duration-500 group-hover:scale-110 transform`} aria-hidden="true"></i>
-              )}
-              <span class="font-label-sm text-secondary uppercase tracking-widest group-hover:text-primary transition-colors duration-500 text-xs whitespace-normal line-clamp-2">
+              <span class="font-headline-md text-3xl md:text-5xl text-secondary group-hover:text-primary transition-colors tracking-tighter">
                 {skill.name.split(' / ')[0]}
               </span>
             </div>
@@ -80,5 +62,85 @@ const displaySkills = allSkills.slice(0, 15);
         })}
       </div>
     </div>
+
   </div>
 </section>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Section Header Reveal
+  gsap.fromTo('.tech-header', 
+    { y: 30, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#tech-stack',
+        start: 'top 80%',
+      }
+    }
+  );
+
+  // GSAP Marquee with Scroll Velocity
+  const marqueeWrapper = document.querySelector('.tech-marquee-wrapper');
+  const marqueeContent = document.querySelector('.tech-marquee-content');
+
+  if (marqueeWrapper && marqueeContent) {
+    // Clone content for seamless loop
+    const clone = marqueeContent.cloneNode(true);
+    marqueeWrapper.appendChild(clone);
+
+    // Initial tween setup
+    let xPos = 0;
+    let speed = 1.5; // Base speed
+    
+    const ticker = gsap.ticker.add(() => {
+      xPos -= speed;
+      // Reset position when first block fully exits screen
+      // 50% because we cloned it (wrapper is 200% width, each child is 100%)
+      if (xPos <= -50) {
+        xPos = 0;
+      }
+      gsap.set(marqueeWrapper, { xPercent: xPos });
+    });
+
+    // Speed up on scroll
+    ScrollTrigger.create({
+      trigger: 'body',
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        // self.getVelocity() returns pixels per second
+        // map velocity to speed
+        const velocity = Math.abs(self.getVelocity());
+        const targetSpeed = 1.5 + (velocity / 500); // add extra speed
+        
+        // animate the speed variable itself for smooth ramp up/down
+        gsap.to({ val: speed }, {
+          val: targetSpeed,
+          duration: 0.1,
+          onUpdate: function() {
+            speed = this.targets()[0].val;
+          },
+          onComplete: () => {
+            // Decay back to base speed
+            gsap.to({ val: speed }, {
+              val: 1.5,
+              duration: 1,
+              ease: 'power2.out',
+              onUpdate: function() {
+                speed = this.targets()[0].val;
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+</script>

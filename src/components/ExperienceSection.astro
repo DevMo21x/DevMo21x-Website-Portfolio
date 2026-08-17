@@ -2,55 +2,181 @@
 import experienceData from '../data/experience.json';
 ---
 
-<section
-  class="animate-on-scroll w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-t border-outline-variant scroll-mt-32"
-  id="experience"
->
-  <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-16">
-    <div class="md:col-span-4">
-      <h2 class="font-headline-md text-primary">
-        Professional Experience
-      </h2>
-    </div>
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-t border-outline-variant/50 relative" id="experience">
+  
+  <div class="mb-24 md:w-2/3 experience-header">
+    <h2 class="font-headline-md text-[6vw] md:text-7xl text-primary font-bold tracking-tight mb-6">
+      Experience
+    </h2>
+    <p class="font-body-lg text-secondary text-xl font-light">
+      A timeline of professional roles, highlighting backend scale, cloud transitions, and architectural leadership.
+    </p>
   </div>
-  <div class="flex flex-col gap-4 relative">
-    {experienceData.workExperience.map((job) => (
-      <div
-        class="grid grid-cols-1 md:grid-cols-12 gap-gutter py-8 md:py-10 border border-outline-variant/10 hover:border-outline-variant/40 hover:bg-surface/40 backdrop-blur-sm hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] -mx-4 px-6 rounded-2xl hover:-translate-y-1 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-        tabindex="0"
-        role="button"
-      >
-        <div class="md:col-span-3 flex flex-col md:pr-4">
-          <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-2 font-medium">
-            {job.period}
-          </span>
-          <span class="font-body-md text-body-md text-secondary group-hover:text-primary transition-colors">
-            {job.company}
-          </span>
-        </div>
-        <div class="hidden md:flex md:col-span-1 justify-center relative">
-          <div class="absolute top-0 bottom-0 w-[1px] group-hover:bg-primary/50 transition-colors bg-outline-variant/40">
+
+  <div class="flex flex-col md:flex-row gap-16 relative experience-container items-start">
+    
+    {/* Left Side: Timeline List */}
+    <div class="w-full md:w-1/2 flex flex-col gap-8 md:gap-32 relative z-10 timeline-left">
+      <div class="absolute left-[11px] top-4 bottom-0 w-[1px] bg-outline-variant/30 hidden md:block"></div>
+      
+      {experienceData.workExperience.map((job, index) => (
+        <div class="job-item flex gap-8 group cursor-default" data-index={index}>
+          
+          <div class="hidden md:flex flex-col items-center mt-2 relative z-10">
+            <div class="w-6 h-6 rounded-full bg-surface border-4 border-surface-container-highest group-hover:border-primary transition-colors duration-500 flex-shrink-0 indicator-dot"></div>
           </div>
-          <div class="absolute top-1 w-3 h-3 rounded-full bg-surface border-2 border-outline-variant/60 group-hover:border-primary group-hover:bg-primary transition-colors z-10">
-          </div>
-        </div>
-        <div class="md:col-span-8 md:pl-2">
-          <h3 class="font-headline-md text-headline-md text-primary mb-4 flex items-center justify-between">
-            <span>{job.role}</span>
-            <div class="w-8 h-8 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/50 opacity-0 group-hover:opacity-100 group-hover:text-white group-hover:bg-white/[0.1] group-hover:border-white/30 group-hover:scale-110 transition-all duration-300 transform -translate-x-2 group-hover:translate-x-0">
-              <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span>
+
+          <div class="flex flex-col w-full">
+            <span class="font-label-sm text-primary uppercase tracking-[0.2em] mb-3 text-xs md:text-sm">
+              {job.period}
+            </span>
+            <h3 class="font-headline-md text-3xl md:text-4xl text-primary mb-2 font-bold group-hover:text-surface-tint transition-colors">
+              {job.role}
+            </h3>
+            <span class="font-body-md text-secondary text-lg mb-6">
+              {job.company}
+            </span>
+            
+            {/* Mobile shows content directly under */}
+            <div class="md:hidden">
+              <p class="font-body-md text-on-background/80 mb-6 font-light leading-relaxed">
+                {job.summary}
+              </p>
+              <ul class="list-none space-y-4 font-body-md text-secondary font-light">
+                {job.achievements.map((achievement) => (
+                  <li class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2.5 before:w-1.5 before:h-1.5 before:bg-outline-variant before:rounded-full">
+                    {achievement}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </h3>
-          <p class="font-body-md text-on-background/80 mb-6 font-light leading-relaxed">
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+    {/* Right Side: Pinned Details (Desktop Only) */}
+    <div class="hidden md:block w-full md:w-1/2 h-[60vh] sticky top-[20vh] timeline-right bg-surface-container-highest/20 rounded-3xl p-12 border border-outline-variant/20 overflow-hidden backdrop-blur-sm">
+      {experienceData.workExperience.map((job, index) => (
+        <div class="job-detail absolute inset-12 flex flex-col opacity-0 pointer-events-none transition-opacity" data-index={index}>
+          <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-8 border border-primary/20">
+            <span class="material-symbols-outlined text-2xl" aria-hidden="true">work</span>
+          </div>
+          <p class="font-body-md text-on-background/90 mb-8 font-light leading-relaxed text-lg">
             {job.summary}
           </p>
-          <ul class="list-disc list-inside space-y-2 mb-2 hidden group-hover:block transition-all duration-500 font-body-md text-secondary text-sm">
+          <ul class="list-none space-y-5 font-body-md text-secondary font-light">
             {job.achievements.map((achievement) => (
-              <li>{achievement}</li>
+              <li class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2.5 before:w-1.5 before:h-1.5 before:bg-primary/50 before:rounded-full">
+                {achievement}
+              </li>
             ))}
           </ul>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
+
   </div>
 </section>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Section Header Reveal
+  gsap.fromTo('.experience-header', 
+    { y: 50, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.experience-header',
+        start: 'top 80%',
+      }
+    }
+  );
+
+  // Desktop Pinning and Cross-fade logic
+  const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
+  if (isDesktop) {
+    const jobItems = document.querySelectorAll('.job-item');
+    const jobDetails = document.querySelectorAll('.job-detail');
+
+    // Make the first item visible immediately
+    if (jobDetails.length > 0) {
+      gsap.set(jobDetails[0], { opacity: 1, pointerEvents: 'auto', y: 0 });
+      gsap.set(jobItems[0].querySelector('.indicator-dot'), { borderColor: '#ffffff', backgroundColor: '#ffffff' });
+    }
+
+    jobItems.forEach((item, index) => {
+      const dot = item.querySelector('.indicator-dot');
+
+      ScrollTrigger.create({
+        trigger: item,
+        start: 'top 50%',
+        end: 'bottom 50%',
+        onEnter: () => activateDetail(index),
+        onEnterBack: () => activateDetail(index),
+      });
+
+      function activateDetail(activeIndex: number) {
+        // Reset all dots
+        jobItems.forEach(i => {
+          gsap.to(i.querySelector('.indicator-dot'), { 
+            borderColor: 'var(--surface-container-highest)', // approximation
+            backgroundColor: 'transparent',
+            duration: 0.3 
+          });
+        });
+        
+        // Highlight active dot
+        gsap.to(dot, { borderColor: '#ffffff', backgroundColor: '#ffffff', duration: 0.3 });
+
+        // Crossfade details
+        jobDetails.forEach((detail, i) => {
+          if (i === activeIndex) {
+            gsap.to(detail, { 
+              opacity: 1, 
+              pointerEvents: 'auto', 
+              y: 0, 
+              duration: 0.5, 
+              ease: 'power2.out',
+              delay: 0.1 
+            });
+          } else {
+            gsap.to(detail, { 
+              opacity: 0, 
+              pointerEvents: 'none', 
+              y: 20, 
+              duration: 0.3, 
+              ease: 'power2.in' 
+            });
+          }
+        });
+      }
+    });
+  } else {
+    // Mobile basic reveal
+    gsap.utils.toArray('.job-item').forEach((item: any) => {
+      gsap.fromTo(item, 
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+          }
+        }
+      );
+    });
+  }
+</script>
