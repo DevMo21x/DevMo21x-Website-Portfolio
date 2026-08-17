@@ -46,7 +46,6 @@ import profileData from '../data/profile.json';
     if (footer && main) {
       const footerHeight = footer.offsetHeight;
       main.style.marginBottom = `${footerHeight}px`;
-      main.style.backgroundColor = 'var(--surface-container-low)'; // ensure main is opaque
       main.style.position = 'relative';
       main.style.zIndex = '10';
       main.style.boxShadow = '0 20px 40px rgba(0,0,0,0.5)';
