@@ -98,7 +98,7 @@ const displaySkills = [...allSkills, ...allSkills, ...allSkills];
 
     // Initial tween setup
     let xPos = 0;
-    let speed = 1.5; // Base speed
+    let speed = 0.05; // Base speed
     
     const ticker = gsap.ticker.add(() => {
       xPos -= speed;
@@ -119,7 +119,7 @@ const displaySkills = [...allSkills, ...allSkills, ...allSkills];
         // self.getVelocity() returns pixels per second
         // map velocity to speed
         const velocity = Math.abs(self.getVelocity());
-        const targetSpeed = 1.5 + (velocity / 500); // add extra speed
+        const targetSpeed = 0.05 + (velocity / 3000); // add extra speed
         
         // animate the speed variable itself for smooth ramp up/down
         gsap.to({ val: speed }, {
@@ -131,7 +131,7 @@ const displaySkills = [...allSkills, ...allSkills, ...allSkills];
           onComplete: () => {
             // Decay back to base speed
             gsap.to({ val: speed }, {
-              val: 1.5,
+              val: 0.05,
               duration: 1,
               ease: 'power2.out',
               onUpdate: function() {
