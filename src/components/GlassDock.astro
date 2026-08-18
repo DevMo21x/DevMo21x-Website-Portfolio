@@ -1,0 +1,156 @@
+---
+const navItems = [
+  { label: 'Home', href: '#main', icon: 'home' },
+  { label: 'Work', href: '#projects', icon: 'grid_view' },
+  { label: 'Experience', href: '#experience', icon: 'history' },
+  { label: 'Arsenal', href: '#tech-stack', icon: 'code' },
+  { label: 'Awards', href: '#certificates', icon: 'military_tech' },
+  { label: 'Connect', href: '#contact', icon: 'mail' },
+];
+---
+
+<div class="glass-dock-wrapper hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] will-change-transform pb-4 px-4">
+  <nav class="dock-container flex items-end gap-3 px-4 py-3 rounded-full bg-surface-container-highest/60 backdrop-blur-2xl border border-white/10 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.1)]" aria-label="Primary Navigation">
+    {navItems.map((item) => (
+      <a 
+        href={item.href}
+        class="dock-item relative flex items-center justify-center w-12 h-12 rounded-full bg-surface-container/50 border border-white/5 hover:bg-primary/20 hover:border-primary/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary group"
+        aria-label={item.label}
+      >
+        <span class="material-symbols-outlined text-on-surface group-hover:text-primary transition-colors text-xl" aria-hidden="true">
+          {item.icon}
+        </span>
+        
+        {/* Tooltip */}
+        <span class="absolute -top-12 px-3 py-1.5 bg-surface-container-highest border border-white/10 text-on-surface text-xs font-medium rounded-lg opacity-0 pointer-events-none transition-opacity duration-200 shadow-xl whitespace-nowrap dock-tooltip">
+          {item.label}
+        </span>
+      </a>
+    ))}
+  </nav>
+</div>
+
+<style>
+  /* Fluid Rubber-band Physics using :has() and Adjacent Siblings */
+  .dock-container {
+    transform-style: preserve-3d;
+  }
+
+  /* Base transition for items */
+  .dock-item {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                background-color 0.2s, 
+                border-color 0.2s,
+                opacity 0.2s;
+    transform-origin: bottom center;
+  }
+
+  /* The Hovered Item */
+  .dock-item:hover {
+    transform: scale(1.4) translateY(-10px);
+    z-index: 10;
+  }
+
+  /* Show tooltip only on the directly hovered item */
+  .dock-item:hover .dock-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .dock-tooltip {
+    transform: translateY(6px);
+    transition: opacity 0.2s, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  /* The Item AFTER the hovered item */
+  .dock-item:hover + .dock-item {
+    transform: scale(1.15) translateY(-5px);
+    z-index: 9;
+  }
+
+  /* The Item BEFORE the hovered item */
+  .dock-item:has(+ .dock-item:hover) {
+    transform: scale(1.15) translateY(-5px);
+    z-index: 9;
+  }
+
+  /* Dim non-hovered items slightly to pop the active ones */
+  .dock-container:hover .dock-item:not(:hover):not(:hover + .dock-item):not(:has(+ .dock-item:hover)) {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const dockWrapper = document.querySelector('.glass-dock-wrapper');
+  const dockContainer = document.querySelector('.dock-container');
+
+  if (dockWrapper && dockContainer) {
+    // Initial entrance animation
+    gsap.from(dockWrapper, {
+      y: 100,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'elastic.out(1, 0.5)',
+      delay: 0.8
+    });
+
+    // Scroll-driven collapse behavior
+    let isCollapsed = false;
+
+    ScrollTrigger.create({
+      start: 'top top',
+      end: 'max',
+      onUpdate: (self) => {
+        // Don't trigger if near the top or bottom of the page
+        const isNearTop = self.progress < 0.05;
+        const isNearBottom = self.progress > 0.98;
+
+        // If scrolling down with decent velocity
+        if (self.direction === 1 && !isNearTop && !isNearBottom && Math.abs(self.getVelocity()) > 50) {
+          // Scrolling DOWN: Collapse
+          if (!isCollapsed) {
+            isCollapsed = true;
+            gsap.to(dockWrapper, {
+              y: 80, // push down off screen mostly
+              scale: 0.8,
+              opacity: 0.2,
+              duration: 0.4,
+              ease: 'power3.inOut'
+            });
+          }
+        } else if ((self.direction === -1 && Math.abs(self.getVelocity()) > 20) || isNearTop || isNearBottom) {
+          // Scrolling UP, or at absolute top/bottom: Expand
+          if (isCollapsed) {
+            isCollapsed = false;
+            gsap.to(dockWrapper, {
+              y: 0,
+              scale: 1,
+              opacity: 1,
+              duration: 0.6,
+              ease: 'back.out(1.2)'
+            });
+          }
+        }
+      }
+    });
+
+    // Mouse proximity listener to expand if hidden
+    window.addEventListener('mousemove', (e) => {
+      if (isCollapsed && window.innerHeight - e.clientY < 100) {
+        isCollapsed = false;
+        gsap.to(dockWrapper, {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 0.6,
+          ease: 'back.out(1.2)'
+        });
+      }
+    });
+  }
+</script>
