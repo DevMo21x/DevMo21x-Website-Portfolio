@@ -2,7 +2,7 @@
 import experienceData from '../data/experience.json';
 ---
 
-<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap md:pt-20 md:pb-16 max-w-container-max mx-auto border-t border-outline-variant/50 relative" id="experience">
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap md:py-16 md:min-h-screen md:flex md:flex-col md:justify-center max-w-container-max mx-auto border-t border-outline-variant/50 relative" id="experience">
   
   <div class="mb-24 md:mb-12 md:w-2/3 experience-header">
     <h2 class="font-headline-md text-[6vw] md:text-7xl text-primary font-bold tracking-tight mb-6">
@@ -20,10 +20,10 @@ import experienceData from '../data/experience.json';
       <div class="absolute left-[11px] top-4 bottom-0 w-[1px] bg-outline-variant/30 hidden md:block"></div>
       
       {experienceData.workExperience.map((job, index) => (
-        <div class="job-item flex gap-8 group cursor-default" data-index={index}>
+        <div class="job-item flex gap-8 group cursor-default transition-all duration-300" data-index={index}>
           
           <div class="hidden md:flex flex-col items-center mt-2 relative z-10">
-            <div class="w-6 h-6 rounded-full bg-surface border-4 border-surface-container-highest group-hover:border-primary transition-colors duration-500 flex-shrink-0 indicator-dot"></div>
+            <div class="w-6 h-6 rounded-full bg-surface border-4 border-surface-container-highest group-hover:border-primary transition-all duration-500 flex-shrink-0 indicator-dot"></div>
           </div>
 
           <div class="flex flex-col w-full">
@@ -88,15 +88,15 @@ import experienceData from '../data/experience.json';
 
   // Section Header Reveal
   gsap.fromTo('.experience-header', 
-    { y: 50, opacity: 0 },
+    { y: 40, opacity: 0 },
     {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 0.8,
       ease: 'power3.out',
       scrollTrigger: {
         trigger: '.experience-header',
-        start: 'top 80%',
+        start: 'top 85%',
       }
     }
   );
@@ -136,12 +136,17 @@ import experienceData from '../data/experience.json';
       scrollTrigger: {
         trigger: '#experience',
         start: 'top top',
-        end: () => "+=" + (numRoles * 800), // Extended track for comfortable reading
+        end: () => "+=" + (numRoles * 900), // Generous track for relaxed scroll
         pin: true,
-        scrub: 1.2, // Buffered inertia for silky-smooth response
-        anticipatePin: 1
+        pinSpacing: true,
+        scrub: 1.4, // Rich inertial buffering
+        anticipatePin: 1,
+        invalidateOnRefresh: true
       }
     });
+
+    // 1. Initial Lead-in Buffer: Let the user smoothly settle into the pinned section
+    tl.to({}, { duration: 0.8 });
 
     // Smoothly sequence between roles with staggered bullet points
     for (let i = 0; i < numRoles - 1; i++) {
@@ -163,18 +168,18 @@ import experienceData from '../data/experience.json';
 
       const stepLabel = `step${i}`;
 
-      // 1. Fade & drift out current role
+      // Fade & drift out current role
       tl.to(currentDetail, {
         opacity: 0,
-        y: -20,
+        y: -18,
         pointerEvents: 'none',
         duration: 1.2,
         ease: 'power2.inOut'
       }, stepLabel)
       .to(currentElements, {
         opacity: 0,
-        y: -10,
-        stagger: 0.05,
+        y: -8,
+        stagger: 0.04,
         duration: 0.9,
         ease: 'power2.inOut'
       }, stepLabel)
@@ -192,7 +197,7 @@ import experienceData from '../data/experience.json';
         ease: 'power2.inOut'
       }, stepLabel)
 
-      // 2. Fade & stagger in next role
+      // Fade & stagger in next role
       .to(nextDetail, {
         opacity: 1,
         y: 0,
@@ -228,9 +233,12 @@ import experienceData from '../data/experience.json';
         ease: 'power2.out'
       }, `${stepLabel}+=0.5`);
         
-      // Reading pause between roles
-      tl.to({}, { duration: 0.5 }); 
+      // Reading dwell pause between roles
+      tl.to({}, { duration: 0.8 }); 
     }
+
+    // 2. Final Lead-out Buffer: Hold the final role comfortably before releasing page scroll
+    tl.to({}, { duration: 0.8 });
   });
 
   mm.add("(max-width: 767px)", () => {
