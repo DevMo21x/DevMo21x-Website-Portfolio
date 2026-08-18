@@ -1,6 +1,22 @@
 ---
 import profileData from '../data/profile.json';
 import { Button } from './ui/button.tsx';
+import StaggeredMenu from './ui/StaggeredMenu.jsx';
+
+const menuItems = [
+  { label: 'Home', ariaLabel: 'Go to home page', link: '#main' },
+  { label: 'Work', ariaLabel: 'Go to projects', link: '#projects' },
+  { label: 'Experience', ariaLabel: 'Go to experience', link: '#experience' },
+  { label: 'Arsenal', ariaLabel: 'Go to tech stack', link: '#tech-stack' },
+  { label: 'Awards', ariaLabel: 'Go to certificates', link: '#certificates' },
+  { label: 'Connect', ariaLabel: 'Get in touch', link: '#contact' }
+];
+
+const socialItems = [
+  { label: 'GitHub', link: profileData.socials?.github || 'https://github.com' },
+  { label: 'LinkedIn', link: profileData.socials?.linkedin || 'https://linkedin.com' },
+  { label: 'Twitter', link: profileData.socials?.twitter || 'https://x.com' }
+];
 ---
 
 <header class="header-main w-full fixed top-0 z-50 transition-all duration-300 py-6">
@@ -18,10 +34,21 @@ import { Button } from './ui/button.tsx';
 {/* Desktop nav replaced by bottom Glass Dock */}
 
     {/* Mobile Menu Toggle */}
-    <div class="md:hidden flex items-center">
-      <button class="nav-item opacity-0 text-primary p-2 focus-visible:outline-none" aria-label="Toggle Menu">
-        <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
-      </button>
+    <div class="md:hidden flex items-center nav-item opacity-0">
+      <StaggeredMenu 
+        client:load 
+        position="right"
+        items={menuItems}
+        socialItems={socialItems}
+        displaySocials={true}
+        displayItemNumbering={true}
+        menuButtonColor="currentColor" 
+        openMenuButtonColor="#000"
+        changeMenuColorOnOpen={true}
+        colors={['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.02)']}
+        accentColor="var(--color-primary, #5227FF)"
+        logoUrl=""
+      />
     </div>
   </div>
 </header>
