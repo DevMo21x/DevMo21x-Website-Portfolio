@@ -25,8 +25,6 @@ const getIconForSkill = (skill: string) => {
 };
 
 const allSkills = skillsData.skillCategories.flatMap(c => c.skills);
-// Duplicate the array a few times to ensure enough content for smooth scrolling
-const displaySkills = [...allSkills, ...allSkills, ...allSkills];
 ---
 
 <section class="w-full py-section-gap overflow-hidden bg-surface text-on-background border-y border-outline-variant/30 scroll-mt-32 relative" id="tech-stack">
@@ -42,9 +40,27 @@ const displaySkills = [...allSkills, ...allSkills, ...allSkills];
     
     <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-transparent to-[#0a0a0a] z-10 pointer-events-none w-full"></div>
 
-    <div class="tech-marquee-wrapper overflow-hidden flex w-[200%]">
-      <div class="tech-marquee-content flex gap-12 md:gap-24 items-center whitespace-nowrap px-6">
-        {displaySkills.map((skill) => {
+    <div class="tech-marquee-wrapper overflow-hidden flex w-full select-none">
+      <div class="tech-marquee-track flex shrink-0 items-center gap-12 md:gap-24 pr-12 md:pr-24 whitespace-nowrap will-change-transform">
+        {allSkills.map((skill) => {
+          const iconClass = getIconForSkill(skill.name);
+          const isMaterial = iconClass === 'material-symbols-outlined';
+          return (
+            <div class="flex items-center gap-6 group cursor-default opacity-60 hover:opacity-100 transition-opacity duration-300">
+              {isMaterial ? (
+                <span class={`${iconClass} text-5xl md:text-7xl text-primary`} aria-hidden="true">code</span>
+              ) : (
+                <i class={`${iconClass} text-5xl md:text-7xl text-primary`} aria-hidden="true"></i>
+              )}
+              <span class="font-headline-md text-3xl md:text-5xl text-secondary group-hover:text-primary transition-colors tracking-tighter">
+                {skill.name.split(' / ')[0]}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+      <div class="tech-marquee-track flex shrink-0 items-center gap-12 md:gap-24 pr-12 md:pr-24 whitespace-nowrap will-change-transform" aria-hidden="true">
+        {allSkills.map((skill) => {
           const iconClass = getIconForSkill(skill.name);
           const isMaterial = iconClass === 'material-symbols-outlined';
           return (
@@ -87,60 +103,26 @@ const displaySkills = [...allSkills, ...allSkills, ...allSkills];
     }
   );
 
-  // GSAP Marquee with Scroll Velocity
-  const marqueeWrapper = document.querySelector('.tech-marquee-wrapper');
-  const marqueeContent = document.querySelector('.tech-marquee-content');
+  // Seamless Infinite Marquee with constant speed independent of scroll
+  const marqueeTracks = document.querySelectorAll('.tech-marquee-track');
 
-  if (marqueeWrapper && marqueeContent) {
-    // Clone content for seamless loop
-    const clone = marqueeContent.cloneNode(true);
-    marqueeWrapper.appendChild(clone);
-
-    // Initial tween setup
-    let xPos = 0;
-    let speed = 0.05; // Base speed
-    
-    const ticker = gsap.ticker.add(() => {
-      xPos -= speed;
-      // Reset position when first block fully exits screen
-      // 50% because we cloned it (wrapper is 200% width, each child is 100%)
-      if (xPos <= -50) {
-        xPos = 0;
-      }
-      gsap.set(marqueeWrapper, { xPercent: xPos });
+  if (marqueeTracks.length > 0) {
+    const marqueeTween = gsap.to(marqueeTracks, {
+      xPercent: -100,
+      repeat: -1,
+      duration: 40,
+      ease: 'none',
     });
 
-    // Speed up on scroll
-    ScrollTrigger.create({
-      trigger: 'body',
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => {
-        // self.getVelocity() returns pixels per second
-        // map velocity to speed
-        const velocity = Math.abs(self.getVelocity());
-        const targetSpeed = 0.05 + (velocity / 3000); // add extra speed
-        
-        // animate the speed variable itself for smooth ramp up/down
-        gsap.to({ val: speed }, {
-          val: targetSpeed,
-          duration: 0.1,
-          onUpdate: function() {
-            speed = this.targets()[0].val;
-          },
-          onComplete: () => {
-            // Decay back to base speed
-            gsap.to({ val: speed }, {
-              val: 0.05,
-              duration: 1,
-              ease: 'power2.out',
-              onUpdate: function() {
-                speed = this.targets()[0].val;
-              }
-            });
-          }
-        });
-      }
-    });
+    // Subtle gentle slow on hover for enhanced interactivity
+    const wrapper = document.querySelector('.tech-marquee-wrapper');
+    if (wrapper) {
+      wrapper.addEventListener('mouseenter', () => {
+        gsap.to(marqueeTween, { timeScale: 0.3, duration: 0.5, ease: 'power1.out' });
+      });
+      wrapper.addEventListener('mouseleave', () => {
+        gsap.to(marqueeTween, { timeScale: 1, duration: 0.5, ease: 'power1.out' });
+      });
+    }
   }
 </script>
