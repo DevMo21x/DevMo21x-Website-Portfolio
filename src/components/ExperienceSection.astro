@@ -2,9 +2,9 @@
 import experienceData from '../data/experience.json';
 ---
 
-<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-t border-outline-variant/50 relative" id="experience">
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap md:pt-20 md:pb-16 max-w-container-max mx-auto border-t border-outline-variant/50 relative" id="experience">
   
-  <div class="mb-24 md:w-2/3 experience-header">
+  <div class="mb-24 md:mb-12 md:w-2/3 experience-header">
     <h2 class="font-headline-md text-[6vw] md:text-7xl text-primary font-bold tracking-tight mb-6">
       Experience
     </h2>
@@ -16,7 +16,7 @@ import experienceData from '../data/experience.json';
   <div class="flex flex-col md:flex-row gap-16 relative experience-container items-start">
     
     {/* Left Side: Timeline List */}
-    <div class="w-full md:w-1/2 flex flex-col gap-8 md:gap-32 relative z-10 timeline-left">
+    <div class="w-full md:w-1/2 flex flex-col gap-8 md:gap-12 relative z-10 timeline-left">
       <div class="absolute left-[11px] top-4 bottom-0 w-[1px] bg-outline-variant/30 hidden md:block"></div>
       
       {experienceData.workExperience.map((job, index) => (
@@ -30,10 +30,10 @@ import experienceData from '../data/experience.json';
             <span class="font-label-sm text-primary uppercase tracking-[0.2em] mb-3 text-xs md:text-sm">
               {job.period}
             </span>
-            <h3 class="font-headline-md text-3xl md:text-4xl text-primary mb-2 font-bold group-hover:text-surface-tint transition-colors">
+            <h3 class="font-headline-md text-2xl md:text-3xl text-primary mb-2 font-bold group-hover:text-surface-tint transition-colors">
               {job.role}
             </h3>
-            <span class="font-body-md text-secondary text-lg mb-6">
+            <span class="font-body-md text-secondary text-lg mb-6 md:mb-0">
               {job.company}
             </span>
             
@@ -57,16 +57,16 @@ import experienceData from '../data/experience.json';
     </div>
 
     {/* Right Side: Pinned Details (Desktop Only) */}
-    <div class="hidden md:block w-full md:w-1/2 h-[60vh] sticky top-[20vh] timeline-right bg-surface-container-highest/20 rounded-3xl p-12 border border-outline-variant/20 overflow-hidden backdrop-blur-sm">
+    <div class="hidden md:block w-full md:w-1/2 h-[450px] timeline-right bg-surface-container-highest/20 rounded-3xl p-10 border border-outline-variant/20 overflow-hidden backdrop-blur-sm">
       {experienceData.workExperience.map((job, index) => (
-        <div class="job-detail absolute inset-12 flex flex-col opacity-0 pointer-events-none transition-opacity" data-index={index}>
-          <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-8 border border-primary/20">
+        <div class="job-detail absolute inset-10 flex flex-col opacity-0 pointer-events-none transition-opacity" data-index={index}>
+          <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6 border border-primary/20">
             <span class="material-symbols-outlined text-2xl" aria-hidden="true">work</span>
           </div>
-          <p class="font-body-md text-on-background/90 mb-8 font-light leading-relaxed text-lg">
+          <p class="font-body-md text-on-background/90 mb-6 font-light leading-relaxed text-lg">
             {job.summary}
           </p>
-          <ul class="list-none space-y-5 font-body-md text-secondary font-light">
+          <ul class="list-none space-y-3 font-body-md text-secondary font-light">
             {job.achievements.map((achievement) => (
               <li class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2.5 before:w-1.5 before:h-1.5 before:bg-primary/50 before:rounded-full">
                 {achievement}
@@ -102,66 +102,66 @@ import experienceData from '../data/experience.json';
   );
 
   // Desktop Pinning and Cross-fade logic
-  const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+  let mm = gsap.matchMedia();
 
-  if (isDesktop) {
+  mm.add("(min-width: 768px)", () => {
     const jobItems = document.querySelectorAll('.job-item');
     const jobDetails = document.querySelectorAll('.job-detail');
+    const numRoles = jobItems.length;
 
     // Make the first item visible immediately
     if (jobDetails.length > 0) {
-      gsap.set(jobDetails[0], { opacity: 1, pointerEvents: 'auto', y: 0 });
-      gsap.set(jobItems[0].querySelector('.indicator-dot'), { borderColor: '#ffffff', backgroundColor: '#ffffff' });
+      jobItems.forEach((item, i) => {
+        const dot = item.querySelector('.indicator-dot');
+        const detail = jobDetails[i];
+        if (i === 0) {
+          gsap.set(detail, { opacity: 1, pointerEvents: 'auto', y: 0 });
+          gsap.set(dot, { borderColor: '#ffffff', backgroundColor: '#ffffff' });
+          gsap.set(item, { opacity: 1 });
+        } else {
+          gsap.set(detail, { opacity: 0, pointerEvents: 'none', y: 20 });
+          gsap.set(dot, { borderColor: 'var(--surface-container-highest)', backgroundColor: 'transparent' });
+          gsap.set(item, { opacity: 0.5 });
+        }
+      });
     }
 
-    jobItems.forEach((item, index) => {
-      const dot = item.querySelector('.indicator-dot');
-
-      ScrollTrigger.create({
-        trigger: item,
-        start: 'top 50%',
-        end: 'bottom 50%',
-        onEnter: () => activateDetail(index),
-        onEnterBack: () => activateDetail(index),
-      });
-
-      function activateDetail(activeIndex: number) {
-        // Reset all dots
-        jobItems.forEach(i => {
-          gsap.to(i.querySelector('.indicator-dot'), { 
-            borderColor: 'var(--surface-container-highest)', // approximation
-            backgroundColor: 'transparent',
-            duration: 0.3 
-          });
-        });
-        
-        // Highlight active dot
-        gsap.to(dot, { borderColor: '#ffffff', backgroundColor: '#ffffff', duration: 0.3 });
-
-        // Crossfade details
-        jobDetails.forEach((detail, i) => {
-          if (i === activeIndex) {
-            gsap.to(detail, { 
-              opacity: 1, 
-              pointerEvents: 'auto', 
-              y: 0, 
-              duration: 0.5, 
-              ease: 'power2.out',
-              delay: 0.1 
-            });
-          } else {
-            gsap.to(detail, { 
-              opacity: 0, 
-              pointerEvents: 'none', 
-              y: 20, 
-              duration: 0.3, 
-              ease: 'power2.in' 
-            });
-          }
-        });
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#experience',
+        start: 'top top',
+        end: () => "+=" + (numRoles * 600), // Dynamic track based on roles
+        pin: true,
+        scrub: true,
+        anticipatePin: 1
       }
     });
-  } else {
+
+    // Animate between roles
+    for (let i = 0; i < numRoles - 1; i++) {
+      const currentItem = jobItems[i];
+      const currentDot = currentItem.querySelector('.indicator-dot');
+      const currentDetail = jobDetails[i];
+      
+      const nextItem = jobItems[i + 1];
+      const nextDot = nextItem.querySelector('.indicator-dot');
+      const nextDetail = jobDetails[i + 1];
+
+      // Step i timeline sequence
+      tl.to(currentDetail, { opacity: 0, y: -20, pointerEvents: 'none', duration: 1 }, `step${i}`)
+        .to(currentDot, { borderColor: 'var(--surface-container-highest)', backgroundColor: 'transparent', duration: 1 }, `step${i}`)
+        .to(currentItem, { opacity: 0.5, duration: 1 }, `step${i}`)
+        
+        .to(nextDetail, { opacity: 1, y: 0, pointerEvents: 'auto', duration: 1 }, `step${i}`)
+        .to(nextDot, { borderColor: '#ffffff', backgroundColor: '#ffffff', duration: 1 }, `step${i}`)
+        .to(nextItem, { opacity: 1, duration: 1 }, `step${i}`);
+        
+      // Add a small pause for reading
+      tl.to({}, { duration: 0.3 }); 
+    }
+  });
+
+  mm.add("(max-width: 767px)", () => {
     // Mobile basic reveal
     gsap.utils.toArray('.job-item').forEach((item: any) => {
       gsap.fromTo(item, 
@@ -178,5 +178,5 @@ import experienceData from '../data/experience.json';
         }
       );
     });
-  }
+  });
 </script>
