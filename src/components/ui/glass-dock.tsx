@@ -170,39 +170,30 @@ export const GlassDock = React.forwardRef<HTMLDivElement, GlassDockProps>(
                 aria-label={el.title}
                 onMouseEnter={() => handleMouseEnter(index)}
                 onClick={handleClick}
-                className="relative w-10 h-10 flex items-center justify-center cursor-pointer group rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="relative w-10 h-10 flex items-center justify-center cursor-pointer group rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-neutral-300 hover:text-white"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     handleClick(e as unknown as React.MouseEvent);
                   }
                 }}
               >
-                {/* Background Hover Effect */}
-                <motion.div
-                  initial={false}
-                  animate={{
-                    opacity: isHovered ? 1 : 0,
-                    scale: isHovered ? 1 : 0.8
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="absolute inset-0 bg-primary/20 border border-primary/30 rounded-full z-0"
-                />
-
                 <motion.div
                   whileTap={{ scale: 0.9 }}
                   animate={{
                     scale: isHovered ? 1.25 : 1,
                     y: isHovered ? -4 : 0,
                   }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-                  className="z-10 relative"
+                  transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+                  className="z-10 relative flex items-center justify-center pointer-events-none"
                 >
-                  <Icon
-                    className={cn(
-                      'h-6 w-6 transition-colors duration-300',
-                      isHovered ? 'text-primary' : 'text-on-surface opacity-80'
-                    )}
-                  />
+                  {Icon && (
+                    <Icon
+                      className={cn(
+                        'w-6 h-6 text-neutral-300 transition-all duration-300 group-hover:text-white',
+                        isHovered && 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.95)] drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]'
+                      )}
+                    />
+                  )}
                 </motion.div>
               </a>
             );
