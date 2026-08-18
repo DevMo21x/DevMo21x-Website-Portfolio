@@ -46,6 +46,8 @@ const { title } = Astro.props;
       // Synchronize Lenis with GSAP ScrollTrigger
       lenis.on('scroll', ScrollTrigger.update);
 
+      (window as any).lenis = lenis;
+
       gsap.ticker.add((time) => {
         lenis.raf(time * 1000);
       });
