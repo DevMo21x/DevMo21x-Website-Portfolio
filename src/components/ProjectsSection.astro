@@ -2,21 +2,109 @@
 import projectsData from '../data/projects.json';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card.tsx';
 
-// Helper to map tags to devicon classes
-const getIconForTag = (tag: string) => {
+interface TechMeta {
+  icon: string;
+  isMaterial: boolean;
+  color: string;
+  glow: string;
+}
+
+// Helper to map tags to rich devicon classes, vibrant material symbols, and authentic brand colors
+const getTechMeta = (tag: string): TechMeta => {
   const t = tag.toLowerCase();
-  if (t.includes('kubernetes')) return 'devicon-kubernetes-plain';
-  if (t.includes('aws') || t.includes('amazon')) return 'devicon-amazonwebservices-plain-wordmark';
-  if (t.includes('terraform')) return 'devicon-terraform-plain';
-  if (t.includes('go')) return 'devicon-go-plain';
-  if (t.includes('docker')) return 'devicon-docker-plain';
-  if (t.includes('rust')) return 'devicon-rust-plain';
-  if (t.includes('node')) return 'devicon-nodejs-plain';
-  if (t.includes('react')) return 'devicon-react-original';
-  if (t.includes('css')) return 'devicon-css3-plain';
-  if (t.includes('typescript') || t.includes('ts')) return 'devicon-typescript-plain';
-  if (t.includes('python')) return 'devicon-python-plain';
-  return '';
+  
+  if (t.includes('typescript') || t === 'ts') {
+    return { icon: 'devicon-typescript-plain colored', isMaterial: false, color: '#3178C6', glow: 'rgba(49, 120, 198, 0.45)' };
+  }
+  if (t.includes('javascript') || t === 'js') {
+    return { icon: 'devicon-javascript-plain colored', isMaterial: false, color: '#F7DF1E', glow: 'rgba(247, 223, 30, 0.45)' };
+  }
+  if (t.includes('react')) {
+    return { icon: 'devicon-react-original colored', isMaterial: false, color: '#61DAFB', glow: 'rgba(97, 218, 251, 0.45)' };
+  }
+  if (t.includes('node')) {
+    return { icon: 'devicon-nodejs-plain colored', isMaterial: false, color: '#5FA04E', glow: 'rgba(95, 160, 78, 0.45)' };
+  }
+  if (t.includes('docker')) {
+    return { icon: 'devicon-docker-plain colored', isMaterial: false, color: '#2496ED', glow: 'rgba(36, 150, 237, 0.45)' };
+  }
+  if (t.includes('kubernetes')) {
+    return { icon: 'devicon-kubernetes-plain colored', isMaterial: false, color: '#326CE5', glow: 'rgba(50, 108, 229, 0.45)' };
+  }
+  if (t.includes('go') || t === 'golang') {
+    return { icon: 'devicon-go-plain colored', isMaterial: false, color: '#00ADD8', glow: 'rgba(0, 173, 216, 0.45)' };
+  }
+  if (t.includes('rust')) {
+    return { icon: 'devicon-rust-plain colored', isMaterial: false, color: '#DEA584', glow: 'rgba(222, 165, 132, 0.45)' };
+  }
+  if (t.includes('kafka')) {
+    return { icon: 'devicon-apachekafka-original colored', isMaterial: false, color: '#E05A47', glow: 'rgba(224, 90, 71, 0.45)' };
+  }
+  if (t.includes('redis')) {
+    return { icon: 'devicon-redis-plain colored', isMaterial: false, color: '#FF4438', glow: 'rgba(255, 68, 56, 0.45)' };
+  }
+  if (t.includes('prometheus')) {
+    return { icon: 'devicon-prometheus-original colored', isMaterial: false, color: '#E6522C', glow: 'rgba(230, 82, 44, 0.45)' };
+  }
+  if (t.includes('postgresql') || t.includes('postgres') || t.includes('sql')) {
+    return { icon: 'devicon-postgresql-plain colored', isMaterial: false, color: '#4169E1', glow: 'rgba(65, 105, 225, 0.45)' };
+  }
+  if (t.includes('css')) {
+    return { icon: 'devicon-css3-plain colored', isMaterial: false, color: '#264DE4', glow: 'rgba(38, 77, 228, 0.45)' };
+  }
+  if (t.includes('html') || t.includes('canvas')) {
+    return { icon: 'devicon-html5-plain colored', isMaterial: false, color: '#E34F26', glow: 'rgba(227, 79, 38, 0.45)' };
+  }
+  if (t.includes('python')) {
+    return { icon: 'devicon-python-plain colored', isMaterial: false, color: '#3776AB', glow: 'rgba(55, 118, 171, 0.45)' };
+  }
+  if (t.includes('graphql')) {
+    return { icon: 'devicon-graphql-plain colored', isMaterial: false, color: '#E10098', glow: 'rgba(225, 0, 152, 0.45)' };
+  }
+  if (t.includes('aws') || t.includes('amazon')) {
+    return { icon: 'devicon-amazonwebservices-plain-wordmark colored', isMaterial: false, color: '#FF9900', glow: 'rgba(255, 153, 0, 0.45)' };
+  }
+  if (t.includes('websocket')) {
+    return { icon: 'sync_alt', isMaterial: true, color: '#00E5FF', glow: 'rgba(0, 229, 255, 0.5)' };
+  }
+  if (t.includes('llm') || t.includes('ai')) {
+    return { icon: 'smart_toy', isMaterial: true, color: '#10A37F', glow: 'rgba(16, 163, 127, 0.5)' };
+  }
+  if (t.includes('vector')) {
+    return { icon: 'hub', isMaterial: true, color: '#A855F7', glow: 'rgba(168, 85, 247, 0.5)' };
+  }
+  if (t.includes('audio') || t.includes('sound')) {
+    return { icon: 'graphic_eq', isMaterial: true, color: '#EC4899', glow: 'rgba(236, 72, 153, 0.5)' };
+  }
+  if (t.includes('dsp') || t.includes('wave')) {
+    return { icon: 'waves', isMaterial: true, color: '#06B6D4', glow: 'rgba(6, 182, 212, 0.5)' };
+  }
+  if (t.includes('auth') || t.includes('passkey')) {
+    return { icon: 'fingerprint', isMaterial: true, color: '#38BDF8', glow: 'rgba(56, 189, 248, 0.5)' };
+  }
+  if (t.includes('crypto') || t.includes('security') || t.includes('vault')) {
+    return { icon: 'lock', isMaterial: true, color: '#10B981', glow: 'rgba(16, 185, 129, 0.5)' };
+  }
+  if (t.includes('oauth')) {
+    return { icon: 'vpn_key', isMaterial: true, color: '#F59E0B', glow: 'rgba(245, 158, 11, 0.5)' };
+  }
+  if (t.includes('cli') || t.includes('terminal')) {
+    return { icon: 'terminal', isMaterial: true, color: '#4ADE80', glow: 'rgba(74, 222, 128, 0.5)' };
+  }
+  if (t.includes('async') || t.includes('io')) {
+    return { icon: 'bolt', isMaterial: true, color: '#FBBF24', glow: 'rgba(251, 191, 36, 0.5)' };
+  }
+  if (t.includes('component') || t.includes('widget')) {
+    return { icon: 'extension', isMaterial: true, color: '#29B6F6', glow: 'rgba(41, 182, 246, 0.5)' };
+  }
+  if (t.includes('a11y') || t.includes('accessibility')) {
+    return { icon: 'accessibility_new', isMaterial: true, color: '#34D399', glow: 'rgba(52, 211, 153, 0.5)' };
+  }
+  if (t.includes('web apis') || t.includes('api')) {
+    return { icon: 'api', isMaterial: true, color: '#F97316', glow: 'rgba(249, 115, 22, 0.5)' };
+  }
+
+  return { icon: 'code', isMaterial: true, color: '#CBD5E1', glow: 'rgba(203, 213, 225, 0.35)' };
 };
 ---
 
@@ -82,13 +170,29 @@ const getIconForTag = (tag: string) => {
                 {project.description || project.summary}
               </CardDescription>
 
-              <CardFooter className="p-0 flex flex-wrap gap-3">
+              <CardFooter className="p-0 flex flex-wrap gap-2.5">
                 {project.tags.map((tag) => {
-                  const icon = getIconForTag(tag);
+                  const tech = getTechMeta(tag);
                   return (
-                    <span class="px-4 py-2 bg-surface-container-highest border border-outline-variant/30 text-secondary font-label-sm rounded-full flex items-center gap-2">
-                      {icon && <i class={`${icon} text-lg opacity-70`} aria-hidden="true"></i>}
-                      {tag}
+                    <span 
+                      class="tech-pill relative px-3.5 py-1.5 bg-surface-container-highest/60 border border-outline-variant/40 rounded-full flex items-center gap-2 text-xs md:text-sm font-medium text-on-surface/90 backdrop-blur-sm cursor-default"
+                      style={`--tech-color: ${tech.color}; --tech-glow: ${tech.glow};`}
+                    >
+                      {tech.isMaterial ? (
+                        <span 
+                          class="material-symbols-outlined text-base md:text-lg tech-icon transition-all duration-300 flex-shrink-0" 
+                          style={`color: ${tech.color};`}
+                          aria-hidden="true"
+                        >
+                          {tech.icon}
+                        </span>
+                      ) : (
+                        <i 
+                          class={`${tech.icon} text-base md:text-lg tech-icon transition-all duration-300 flex-shrink-0`} 
+                          aria-hidden="true"
+                        ></i>
+                      )}
+                      <span class="tracking-tight text-secondary/90 transition-colors duration-300 tech-label">{tag}</span>
                     </span>
                   );
                 })}
@@ -101,6 +205,31 @@ const getIconForTag = (tag: string) => {
     })}
   </div>
 </section>
+
+<style>
+  .tech-pill {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                background-color 0.3s ease,
+                box-shadow 0.3s ease;
+  }
+  
+  .tech-pill:hover {
+    border-color: var(--tech-color) !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 0 16px -1px var(--tech-glow), inset 0 0 10px -2px var(--tech-glow) !important;
+    transform: translateY(-2px) scale(1.04);
+  }
+
+  .tech-pill:hover .tech-icon {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 8px var(--tech-color));
+  }
+
+  .tech-pill:hover .tech-label {
+    color: #ffffff !important;
+  }
+</style>
 
 <script>
   import gsap from 'gsap';
