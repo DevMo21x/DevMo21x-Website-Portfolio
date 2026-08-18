@@ -57,18 +57,18 @@ import experienceData from '../data/experience.json';
     </div>
 
     {/* Right Side: Pinned Details (Desktop Only) */}
-    <div class="hidden md:block w-full md:w-1/2 h-[450px] timeline-right bg-surface-container-highest/20 rounded-3xl p-10 border border-outline-variant/20 overflow-hidden backdrop-blur-sm">
+    <div class="hidden md:block w-full md:w-1/2 h-[460px] timeline-right bg-surface-container-highest/20 rounded-3xl p-10 border border-outline-variant/20 overflow-hidden backdrop-blur-sm relative">
       {experienceData.workExperience.map((job, index) => (
-        <div class="job-detail absolute inset-10 flex flex-col opacity-0 pointer-events-none transition-opacity" data-index={index}>
-          <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6 border border-primary/20">
+        <div class="job-detail absolute inset-10 flex flex-col opacity-0 pointer-events-none will-change-transform" data-index={index}>
+          <div class="detail-icon w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6 border border-primary/20 shadow-[0_0_15px_rgba(255,255,255,0.05)] flex-shrink-0">
             <span class="material-symbols-outlined text-2xl" aria-hidden="true">work</span>
           </div>
-          <p class="font-body-md text-on-background/90 mb-6 font-light leading-relaxed text-lg">
+          <p class="detail-summary font-body-md text-on-background/90 mb-6 font-light leading-relaxed text-lg">
             {job.summary}
           </p>
-          <ul class="list-none space-y-3 font-body-md text-secondary font-light">
+          <ul class="detail-achievements list-none space-y-3.5 font-body-md text-secondary font-light">
             {job.achievements.map((achievement) => (
-              <li class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2.5 before:w-1.5 before:h-1.5 before:bg-primary/50 before:rounded-full">
+              <li class="achievement-item relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2.5 before:w-1.5 before:h-1.5 before:bg-primary/60 before:rounded-full transition-colors leading-relaxed">
                 {achievement}
               </li>
             ))}
@@ -101,7 +101,7 @@ import experienceData from '../data/experience.json';
     }
   );
 
-  // Desktop Pinning and Cross-fade logic
+  // Desktop Pinning and Smooth Cross-fade logic
   let mm = gsap.matchMedia();
 
   mm.add("(min-width: 768px)", () => {
@@ -109,19 +109,25 @@ import experienceData from '../data/experience.json';
     const jobDetails = document.querySelectorAll('.job-detail');
     const numRoles = jobItems.length;
 
-    // Make the first item visible immediately
+    // Initial state
     if (jobDetails.length > 0) {
       jobItems.forEach((item, i) => {
         const dot = item.querySelector('.indicator-dot');
         const detail = jobDetails[i];
+        const icon = detail.querySelector('.detail-icon');
+        const summary = detail.querySelector('.detail-summary');
+        const bullets = detail.querySelectorAll('.achievement-item');
+
         if (i === 0) {
           gsap.set(detail, { opacity: 1, pointerEvents: 'auto', y: 0 });
-          gsap.set(dot, { borderColor: '#ffffff', backgroundColor: '#ffffff' });
-          gsap.set(item, { opacity: 1 });
+          gsap.set([icon, summary, ...bullets], { opacity: 1, y: 0 });
+          gsap.set(dot, { borderColor: '#ffffff', backgroundColor: '#ffffff', boxShadow: '0 0 14px rgba(255,255,255,0.7)' });
+          gsap.set(item, { opacity: 1, x: 6 });
         } else {
           gsap.set(detail, { opacity: 0, pointerEvents: 'none', y: 20 });
-          gsap.set(dot, { borderColor: 'var(--surface-container-highest)', backgroundColor: 'transparent' });
-          gsap.set(item, { opacity: 0.5 });
+          gsap.set([icon, summary, ...bullets], { opacity: 0, y: 12 });
+          gsap.set(dot, { borderColor: 'var(--surface-container-highest)', backgroundColor: 'transparent', boxShadow: 'none' });
+          gsap.set(item, { opacity: 0.35, x: 0 });
         }
       });
     }
@@ -130,34 +136,100 @@ import experienceData from '../data/experience.json';
       scrollTrigger: {
         trigger: '#experience',
         start: 'top top',
-        end: () => "+=" + (numRoles * 600), // Dynamic track based on roles
+        end: () => "+=" + (numRoles * 800), // Extended track for comfortable reading
         pin: true,
-        scrub: true,
+        scrub: 1.2, // Buffered inertia for silky-smooth response
         anticipatePin: 1
       }
     });
 
-    // Animate between roles
+    // Smoothly sequence between roles with staggered bullet points
     for (let i = 0; i < numRoles - 1; i++) {
       const currentItem = jobItems[i];
       const currentDot = currentItem.querySelector('.indicator-dot');
       const currentDetail = jobDetails[i];
+      const currentElements = [
+        currentDetail.querySelector('.detail-icon'),
+        currentDetail.querySelector('.detail-summary'),
+        ...currentDetail.querySelectorAll('.achievement-item')
+      ];
       
       const nextItem = jobItems[i + 1];
       const nextDot = nextItem.querySelector('.indicator-dot');
       const nextDetail = jobDetails[i + 1];
+      const nextIcon = nextDetail.querySelector('.detail-icon');
+      const nextSummary = nextDetail.querySelector('.detail-summary');
+      const nextBullets = nextDetail.querySelectorAll('.achievement-item');
 
-      // Step i timeline sequence
-      tl.to(currentDetail, { opacity: 0, y: -20, pointerEvents: 'none', duration: 1 }, `step${i}`)
-        .to(currentDot, { borderColor: 'var(--surface-container-highest)', backgroundColor: 'transparent', duration: 1 }, `step${i}`)
-        .to(currentItem, { opacity: 0.5, duration: 1 }, `step${i}`)
+      const stepLabel = `step${i}`;
+
+      // 1. Fade & drift out current role
+      tl.to(currentDetail, {
+        opacity: 0,
+        y: -20,
+        pointerEvents: 'none',
+        duration: 1.2,
+        ease: 'power2.inOut'
+      }, stepLabel)
+      .to(currentElements, {
+        opacity: 0,
+        y: -10,
+        stagger: 0.05,
+        duration: 0.9,
+        ease: 'power2.inOut'
+      }, stepLabel)
+      .to(currentDot, {
+        borderColor: 'var(--surface-container-highest)',
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
+        duration: 1,
+        ease: 'power2.inOut'
+      }, stepLabel)
+      .to(currentItem, {
+        opacity: 0.35,
+        x: 0,
+        duration: 1,
+        ease: 'power2.inOut'
+      }, stepLabel)
+
+      // 2. Fade & stagger in next role
+      .to(nextDetail, {
+        opacity: 1,
+        y: 0,
+        pointerEvents: 'auto',
+        duration: 1.2,
+        ease: 'power2.out'
+      }, `${stepLabel}+=0.3`)
+      .to(nextDot, {
+        borderColor: '#ffffff',
+        backgroundColor: '#ffffff',
+        boxShadow: '0 0 14px rgba(255,255,255,0.7)',
+        duration: 1,
+        ease: 'power2.out'
+      }, `${stepLabel}+=0.3`)
+      .to(nextItem, {
+        opacity: 1,
+        x: 6,
+        duration: 1,
+        ease: 'power2.out'
+      }, `${stepLabel}+=0.3`)
+      .to([nextIcon, nextSummary], {
+        opacity: 1,
+        y: 0,
+        stagger: 0.08,
+        duration: 0.9,
+        ease: 'power2.out'
+      }, `${stepLabel}+=0.4`)
+      .to(nextBullets, {
+        opacity: 1,
+        y: 0,
+        stagger: 0.12,
+        duration: 1,
+        ease: 'power2.out'
+      }, `${stepLabel}+=0.5`);
         
-        .to(nextDetail, { opacity: 1, y: 0, pointerEvents: 'auto', duration: 1 }, `step${i}`)
-        .to(nextDot, { borderColor: '#ffffff', backgroundColor: '#ffffff', duration: 1 }, `step${i}`)
-        .to(nextItem, { opacity: 1, duration: 1 }, `step${i}`);
-        
-      // Add a small pause for reading
-      tl.to({}, { duration: 0.3 }); 
+      // Reading pause between roles
+      tl.to({}, { duration: 0.5 }); 
     }
   });
 
