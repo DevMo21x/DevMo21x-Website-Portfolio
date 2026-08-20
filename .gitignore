@@ -40,3 +40,8 @@ logs/
 scratch/
 ARCHITECTURE.md
 docs/CONTRIBUTING.md
+
+# Graphify
+graphify-out/
+.graphify/
+.graphify*
