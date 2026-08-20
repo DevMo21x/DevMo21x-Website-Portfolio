@@ -189,7 +189,7 @@ export const GlassDock = React.forwardRef<HTMLDivElement, GlassDockProps>(
                   {Icon && (
                     <Icon
                       className={cn(
-                        'w-6 h-6 text-neutral-300 transition-all duration-300 group-hover:text-white',
+                        'w-6 h-6 text-neutral-300 transition-colors duration-300 group-hover:text-white',
                         isHovered && 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.95)] drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]'
                       )}
                     />

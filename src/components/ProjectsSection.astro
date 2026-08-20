@@ -111,7 +111,7 @@ const getTechMeta = (tag: string): TechMeta => {
 <section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-t border-outline-variant/50 scroll-mt-32" id="projects">
   
   <div class="mb-24 md:w-2/3 project-header">
-    <h2 class="font-headline-md text-[6vw] md:text-7xl text-primary font-bold tracking-tight mb-6">
+    <h2 class="font-headline-md text-[6vw] md:text-7xl text-primary font-bold tracking-tight mb-6 text-balance">
       Selected Work
     </h2>
     <p class="font-body-lg text-secondary text-xl font-light">
@@ -180,7 +180,7 @@ const getTechMeta = (tag: string): TechMeta => {
                     >
                       {tech.isMaterial ? (
                         <span 
-                          class="material-symbols-outlined text-base md:text-lg tech-icon transition-all duration-300 flex-shrink-0" 
+                          class="material-symbols-outlined text-base md:text-lg tech-icon transition duration-300 flex-shrink-0" 
                           style={`color: ${tech.color};`}
                           aria-hidden="true"
                         >
@@ -188,7 +188,7 @@ const getTechMeta = (tag: string): TechMeta => {
                         </span>
                       ) : (
                         <i 
-                          class={`${tech.icon} text-base md:text-lg tech-icon transition-all duration-300 flex-shrink-0`} 
+                          class={`${tech.icon} text-base md:text-lg tech-icon transition duration-300 flex-shrink-0`} 
                           aria-hidden="true"
                         ></i>
                       )}

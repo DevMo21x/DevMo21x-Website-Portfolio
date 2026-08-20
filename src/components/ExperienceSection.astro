@@ -5,7 +5,7 @@ import experienceData from '../data/experience.json';
 <section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap md:py-16 md:min-h-screen md:flex md:flex-col md:justify-center max-w-container-max mx-auto border-t border-outline-variant/50 relative" id="experience">
   
   <div class="mb-24 md:mb-12 md:w-2/3 experience-header">
-    <h2 class="font-headline-md text-[6vw] md:text-7xl text-primary font-bold tracking-tight mb-6">
+    <h2 class="font-headline-md text-[6vw] md:text-7xl text-primary font-bold tracking-tight mb-6 text-balance">
       Experience
     </h2>
     <p class="font-body-lg text-secondary text-xl font-light">
@@ -20,10 +20,10 @@ import experienceData from '../data/experience.json';
       <div class="absolute left-[11px] top-4 bottom-0 w-[1px] bg-outline-variant/30 hidden md:block"></div>
       
       {experienceData.workExperience.map((job, index) => (
-        <div class="job-item flex gap-8 group cursor-default transition-all duration-300" data-index={index}>
+        <div class="job-item flex gap-8 group cursor-default transition duration-300" data-index={index}>
           
           <div class="hidden md:flex flex-col items-center mt-2 relative z-10">
-            <div class="w-6 h-6 rounded-full bg-surface border-4 border-surface-container-highest group-hover:border-primary transition-all duration-500 flex-shrink-0 indicator-dot"></div>
+            <div class="w-6 h-6 rounded-full bg-surface border-4 border-surface-container-highest group-hover:border-primary transition duration-500 flex-shrink-0 indicator-dot"></div>
           </div>
 
           <div class="flex flex-col w-full">
