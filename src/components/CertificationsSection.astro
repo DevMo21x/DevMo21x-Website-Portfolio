@@ -1,12 +1,11 @@
 ---
 import experienceData from '../data/experience.json';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/card.tsx';
+import { Card, CardTitle } from './ui/card.tsx';
 ---
 
-<section class="w-full bg-surface-container-low border-t border-outline-variant/50 cert-section-wrapper overflow-hidden relative" id="certificates">
-  
-  <div class="px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto h-screen flex flex-col justify-center cert-pin-container">
-    
+<section class="w-full border-t border-outline-variant/50 relative" id="certificates">
+  <div class="px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
+
     <div class="mb-16 md:mb-24 cert-header">
       <h2 class="font-headline-md text-[6vw] md:text-7xl text-primary font-bold tracking-tight mb-6 text-balance">
         Certifications
@@ -14,40 +13,35 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/
       <div class="w-24 h-[2px] bg-primary mb-8"></div>
     </div>
 
-    <div class="cert-scroll-container w-full overflow-hidden">
-      <div class="cert-track flex gap-8 md:gap-12 w-max px-4 md:px-0">
-        {experienceData.certifications.map((cert, index) => (
-          <div class="cert-card-wrapper w-[85vw] md:w-[450px] flex-shrink-0">
-            <Card className="h-full bg-surface/50 backdrop-blur-md border border-outline-variant/40 rounded-[2rem] p-8 md:p-10 hover:bg-surface/80 hover:border-outline-variant transition-colors duration-500 group">
-              <div class="flex flex-col h-full justify-between gap-12">
-                <div>
-                  <div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center mb-8 border border-outline-variant/30 group-hover:scale-110 group-hover:bg-primary/5 transition duration-500">
-                    <span class="material-symbols-outlined text-2xl text-secondary group-hover:text-primary transition-colors" aria-hidden="true">workspace_premium</span>
-                  </div>
-                  <CardTitle className="text-2xl md:text-3xl font-bold mb-4 text-primary leading-tight">
-                    {cert.title}
-                  </CardTitle>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+      {experienceData.certifications.map((cert, index) => (
+        <div class="cert-card opacity-0 translate-y-8" data-index={index}>
+          <Card className="h-full bg-surface/50 backdrop-blur-md border border-outline-variant/40 rounded-[2rem] p-8 md:p-10 hover:bg-surface/80 hover:border-outline-variant transition-colors duration-500 group">
+            <div class="flex flex-col h-full justify-between gap-12">
+              <div>
+                <div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center mb-8 border border-outline-variant/30 group-hover:scale-110 group-hover:bg-primary/5 transition duration-500">
+                  <span class="material-symbols-outlined text-2xl text-secondary group-hover:text-primary transition-colors" aria-hidden="true">workspace_premium</span>
                 </div>
-                
-                <div class="flex items-center justify-between border-t border-outline-variant/30 pt-6">
-                  <span class="font-body-md text-secondary">
-                    {cert.issuer}
-                  </span>
-                  <span class="font-label-sm text-xs text-primary bg-primary/10 px-4 py-1.5 rounded-full uppercase tracking-widest border border-primary/20">
-                    {cert.year}
-                  </span>
-                </div>
+                <CardTitle className="text-2xl md:text-3xl font-bold mb-4 text-primary leading-tight">
+                  {cert.title}
+                </CardTitle>
               </div>
-            </Card>
-          </div>
-        ))}
-        {/* Empty padding element at the end for scroll clearance */}
-        <div class="w-[10vw] flex-shrink-0"></div>
-      </div>
+
+              <div class="flex items-center justify-between border-t border-outline-variant/30 pt-6">
+                <span class="font-body-md text-secondary">
+                  {cert.issuer}
+                </span>
+                <span class="font-label-sm text-xs text-primary bg-primary/10 px-4 py-1.5 rounded-full uppercase tracking-widest border border-primary/20">
+                  {cert.year}
+                </span>
+              </div>
+            </div>
+          </Card>
+        </div>
+      ))}
     </div>
 
   </div>
-
 </section>
 
 <script>
@@ -56,56 +50,36 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Desktop horizontal scroll pinning
-  const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-
-  if (isDesktop) {
-    const wrapper = document.querySelector('.cert-section-wrapper');
-    const track = document.querySelector('.cert-track');
-
-    if (wrapper && track) {
-      // Calculate how far to move left
-      // track scroll width minus the viewport width to stop cleanly
-      const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 100);
-
-      const tween = gsap.to(track, {
-        x: getScrollAmount,
-        ease: 'none'
-      });
-
-      ScrollTrigger.create({
-        trigger: wrapper,
-        start: 'top top',
-        end: () => `+=${track.scrollWidth - window.innerWidth}`,
-        pin: true,
-        animation: tween,
-        scrub: 1, // Smooth scrubbing
-        invalidateOnRefresh: true
-      });
-    }
-  } else {
-    // Mobile basic reveal (no horizontal pin, just standard CSS overflow or fade-in)
-    // Actually, on mobile, we can just allow native horizontal scroll for better UX
-    const scrollContainer = document.querySelector('.cert-scroll-container');
-    if (scrollContainer) {
-      scrollContainer.classList.remove('overflow-hidden');
-      scrollContainer.classList.add('overflow-x-auto', 'snap-x', 'snap-mandatory');
-      const cards = document.querySelectorAll('.cert-card-wrapper');
-      cards.forEach(card => card.classList.add('snap-center'));
-    }
-
-    gsap.fromTo('.cert-header', 
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.cert-section-wrapper',
-          start: 'top 80%',
-        }
+  // Reveal header
+  gsap.fromTo('.cert-header',
+    { y: 30, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.cert-header',
+        start: 'top 85%',
+        once: true,
       }
-    );
-  }
+    }
+  );
+
+  // Staggered card reveal
+  gsap.fromTo('.cert-card',
+    { y: 40, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      ease: 'power3.out',
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: '#certificates .grid',
+        start: 'top 85%',
+        once: true,
+      }
+    }
+  );
 </script>
