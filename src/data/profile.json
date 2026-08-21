@@ -3,6 +3,8 @@
   "surname": "",
   "title": "Full-Stack Software Engineer & System Architect",
   "tagline": "Crafting resilient cloud architectures, elegant developer tools, and high-performance web experiences.",
+  "heroHeadline": ["Build.", "Scale."],
+  "heroDescriptor": "Building resilient cloud systems, elegant developer tools, and high-performance web experiences.",
   "status": {
     "available": true,
     "message": "Open to select engineering roles & architectural consulting"

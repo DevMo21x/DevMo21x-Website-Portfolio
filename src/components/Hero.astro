@@ -1,100 +1,156 @@
 ---
 import profileData from '../data/profile.json';
 import HeroParticleBackground from './HeroParticleBackground.tsx';
-import { Button } from './ui/button.tsx';
 ---
 
-<section class="relative w-full min-h-[90vh] flex items-center overflow-hidden bg-surface-container-low" id="hero">
-  <!-- Interactive Particle Background -->
+<section
+  class="relative w-full min-h-dvh flex flex-col justify-center overflow-hidden bg-surface-container-low"
+  id="hero"
+>
+  <!-- Interactive Particle Background — untouched -->
   <HeroParticleBackground client:load />
 
-  <div class="relative z-10 w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-    <div class="flex flex-col items-start w-full md:w-3/4 lg:w-2/3">
-      
-      <div class="hero-element opacity-0 translate-y-10 mb-8">
-        <span class="font-label-sm text-label-sm text-secondary uppercase tracking-[0.2em] flex items-center gap-4">
-          <span class="w-12 h-[1px] bg-primary block"></span>
+  <!-- Content layer -->
+  <div class="relative z-10 w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto py-24 md:py-0 flex flex-col md:flex-row md:items-end gap-10 md:gap-16">
+
+    <!-- ═══ LEFT: Monumental Headline ═══ -->
+    <div class="flex-1 min-w-0 flex flex-col justify-end">
+
+      <!-- Role label -->
+      <div class="hero-label mb-4 md:mb-6" style="clip-path: inset(100% 0 0 0);">
+        <span class="font-label-sm text-label-sm text-white/60 uppercase tracking-[0.25em] flex items-center gap-4">
+          <span class="w-10 h-px bg-white/30 block"></span>
           {profileData.title}
         </span>
       </div>
 
-      <h1 class="hero-element opacity-0 translate-y-10 text-[clamp(2rem,5vw,4.5rem)] leading-[1.1] text-primary font-bold tracking-tight mb-6 text-balance">
-        {profileData.tagline}
+      <!-- Headline — each word is its own block for staggered clip reveal -->
+      <h1 class="mb-6 md:mb-8 select-none" aria-label={profileData.heroHeadline.join(' ')}>
+        {profileData.heroHeadline.map((word: string, i: number) => (
+          <span
+            class="hero-word block font-display-lg leading-[0.9] tracking-[-0.04em] text-primary"
+            style={`font-size: clamp(3rem, 7.5vw, 7.5rem); clip-path: inset(100% 0 0 0); font-family: 'Syne', sans-serif; font-weight: 800;`}
+            data-index={i}
+          >
+            {word}
+          </span>
+        ))}
       </h1>
 
-      <p class="hero-element opacity-0 translate-y-10 font-body-lg text-on-background/80 max-w-xl font-light leading-relaxed mb-8">
-        {profileData.bio.short}
-      </p>
+      <!-- CTAs -->
+      <div class="hero-ctas flex flex-wrap items-center gap-4" style="clip-path: inset(100% 0 0 0);">
+        <a href="#projects" class="btn-luxury-primary">
+          Explore Projects
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_forward</span>
+        </a>
 
-      <div class="hero-element opacity-0 translate-y-10 flex flex-wrap items-center gap-6">
-        <Button asChild size="lg" className="hero-cta h-14 px-8 text-base tracking-wide bg-primary text-on-primary font-medium hover:bg-primary transition-none rounded-full block">
-          <a href="#projects">
-            Explore Projects
-            <span class="material-symbols-outlined ml-2 text-xl" aria-hidden="true">arrow_forward</span>
-          </a>
-        </Button>
-        
         {profileData.resumeUrl && (
-          <a 
-            href={profileData.resumeUrl} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            class="hero-resume flex items-center gap-2 text-secondary hover:text-primary transition-colors font-label-sm tracking-widest uppercase"
+          <a
+            href={profileData.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-luxury-secondary"
           >
             <span class="material-symbols-outlined text-lg" aria-hidden="true">description</span>
-            View Resume
+            Resume
           </a>
         )}
       </div>
+    </div>
+
+    <!-- ═══ RIGHT: Editorial Column ═══ -->
+    <div class="hero-right-col md:w-[320px] lg:w-[360px] shrink-0 md:pb-2 flex flex-col gap-6" style="opacity: 0; transform: translateY(20px);">
+
+      <!-- Descriptor -->
+      <p class="font-body-lg text-white/85 font-light leading-relaxed max-w-[340px]">
+        {profileData.heroDescriptor}
+      </p>
+
+      <!-- Availability pill -->
+      {profileData.status.available && (
+        <div class="flex items-center gap-3">
+          <span
+            class="w-2 h-2 rounded-full bg-emerald-400 block"
+            style="animation: availPulse 2.4s ease-in-out infinite;"
+            aria-hidden="true"
+          ></span>
+          <span class="font-label-sm text-label-sm text-white/70 uppercase tracking-[0.15em]">
+            {profileData.status.message}
+          </span>
+        </div>
+      )}
+
 
     </div>
+
+  </div>
+
+  <!-- Scroll indicator — bottom-right on desktop, hidden on mobile to avoid stat overlap -->
+  <div class="hero-scroll-hint absolute bottom-6 right-margin-desktop z-10 hidden md:flex flex-col items-center gap-2" style="opacity: 0;">
+    <span class="text-[11px] font-label-sm text-secondary/40 uppercase tracking-[0.2em]">Scroll</span>
+    <span class="w-px h-8 bg-secondary/20 block relative overflow-hidden">
+      <span class="absolute inset-x-0 top-0 h-full bg-secondary/60 block" style="animation: scrollDash 2s ease-in-out infinite;"></span>
+    </span>
   </div>
 </section>
+
+<style>
+  @keyframes scrollDash {
+    0%   { transform: translateY(-100%); }
+    50%  { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+  }
+</style>
 
 <script>
   import gsap from 'gsap';
 
-  // GSAP Entrance Timeline
-  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-
-  // Initial delay to wait for layout, then stagger the elements in
-  tl.to('.hero-element', {
-    y: 0,
-    opacity: 1,
-    duration: 1.2,
-    stagger: 0.15,
-    delay: 0.2
-  });
-
-  // CTA Hover Animation using GSAP (Scale/Transform, not flat color)
-  const cta = document.querySelector('.hero-cta');
-  const ctaIcon = cta?.querySelector('.material-symbols-outlined');
-
-  if (cta && ctaIcon) {
-    cta.addEventListener('mouseenter', () => {
-      gsap.to(cta, {
-        scale: 1.05,
-        duration: 0.4,
-        ease: 'back.out(1.5)',
-      });
-      gsap.to(ctaIcon, {
-        x: 4,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
+  // Wait for fonts + layout to settle
+  const ready = () => {
+    const tl = gsap.timeline({
+      defaults: { ease: 'power4.out' },
+      delay: 0.2,
     });
 
-    cta.addEventListener('mouseleave', () => {
-      gsap.to(cta, {
-        scale: 1,
-        duration: 0.4,
-        ease: 'power2.out',
-      });
-      gsap.to(ctaIcon, {
-        x: 0,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
+    // 1. Role label clips in
+    tl.to('.hero-label', {
+      clipPath: 'inset(0% 0 0 0)',
+      duration: 0.7,
     });
+
+    // 2. Headline words clip-reveal with stagger
+    tl.to('.hero-word', {
+      clipPath: 'inset(0% 0 0 0)',
+      duration: 0.8,
+      stagger: 0.15,
+    }, '-=0.3');
+
+    // 3. CTAs clip in
+    tl.to('.hero-ctas', {
+      clipPath: 'inset(0% 0 0 0)',
+      duration: 0.6,
+    }, '-=0.3');
+
+    // 4. Right column fades up
+    tl.to('.hero-right-col', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+    }, '-=0.4');
+
+    // 5. Scroll hint fades in late
+    tl.to('.hero-scroll-hint', {
+      opacity: 1,
+      duration: 0.6,
+    }, '-=0.2');
+  };
+
+  // Run after fonts are loaded for accurate layout
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(ready);
+  } else {
+    // Fallback
+    window.addEventListener('load', ready);
   }
 </script>
