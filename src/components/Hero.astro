@@ -1,14 +1,14 @@
 ---
 import profileData from '../data/profile.json';
-import HeroParticleBackground from './HeroParticleBackground.tsx';
+import FloatingLinesBackground from './FloatingLinesBackground.tsx';
 ---
 
 <section
   class="relative w-full min-h-dvh flex flex-col justify-center overflow-hidden bg-surface-container-low"
   id="hero"
 >
-  <!-- Interactive Particle Background — untouched -->
-  <HeroParticleBackground client:load />
+  <!-- Adaptive GPU line field with a static no-WebGL fallback -->
+  <FloatingLinesBackground client:load />
 
   <!-- Content layer -->
   <div class="relative z-10 w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto py-24 md:py-0 flex flex-col md:flex-row md:items-end gap-10 md:gap-16">

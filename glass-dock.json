@@ -2,10 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "glass-dock",
   "type": "registry:ui",
-  "dependencies": [
-    "framer-motion",
-    "gsap"
-  ],
+  "dependencies": ["framer-motion", "gsap"],
   "files": [
     {
       "path": "components/ui/glass-dock.tsx",
